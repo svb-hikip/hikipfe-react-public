@@ -28,6 +28,7 @@ If you wish to use any other technology, please discuss it with the team first.
 - **Email:** svb@hikip.com
 - **Google Chat:**  svb@hikip.com
 - **Discord:** https://discord.gg/GsRd3C2B
+- **Telegram:** @Svb0866
 
 ## Top 10 Contributors!
 - 1
