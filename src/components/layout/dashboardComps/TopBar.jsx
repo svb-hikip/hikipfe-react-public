@@ -6,12 +6,12 @@ import {
     Bars3Icon,
     BellIcon,
   } from '@heroicons/react/24/outline'
-
+import { signOut } from 'aws-amplify/auth'; 
 import { ChevronDownIcon, MagnifyingGlassIcon } from '@heroicons/react/20/solid'
 
 const userNavigation = [
-  { name: 'Your profile', href: '#' },
-  { name: 'Sign out', href: '#' },
+  { name: 'Your profile', action: '#' },
+  { name: 'Sign out', action: async () => await signOut() },
 ]
 
 function TopBar({ setSidebarOpen }) {
@@ -81,7 +81,7 @@ function TopBar({ setSidebarOpen }) {
                     <Menu.Item key={item.name}>
                       {({ active }) => (
                         <a
-                          href={item.href}
+                          onClick={item.action}
                           className={classNames(
                             active ? 'bg-gray-50' : '',
                             'block px-3 py-1 text-sm leading-6 text-gray-900'

@@ -9,6 +9,7 @@ HIKIP is an online web application designed to assist healthcare professionals s
 - No new packages are to be added to the project without prior discussion and approval.
 - API documentation can be accessed at [HIKIP API Documentation](https://hikip-django-e06ccc5f06d1.herokuapp.com/docs/).
 - Check the `package.json` file for the libraries used in this project.
+- App Credentials ID:svb@hikip.com PW:PaWv2b5Fy@n6BSi
 
 ## Technology Stack
 
