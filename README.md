@@ -31,7 +31,7 @@ If you wish to use any other technology, please discuss it with the team first.
 - **Telegram:** @Svb0866
 
 ## Top 10 Contributors!
-There are 3 openings for Front end Developer (Fully Remote & In-office). Out of top 5 contibutores, 2 may be hired if contribution is satisfactory.  
+There are 2 openings for Front end Developer (Fully Remote & In-office). Out of top 5 contibutores, 2 may be hired if contribution is satisfactory.  
 - 1
 - 2
 - 3
