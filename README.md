@@ -14,6 +14,7 @@ HIKIP is an online web application designed to assist healthcare professionals s
 
 The following technologies are used in this project:
 
+- **Vite**
 - **React 18.2.0**
 - **React Hook Form** for all forms
 - **Full Calendar** for managing appointments
