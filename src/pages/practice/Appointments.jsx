@@ -5,9 +5,12 @@ import timeGridPlugin from '@fullcalendar/timegrid';
 import interactionPlugin from '@fullcalendar/interaction';
 import { fetchPracticeAppointments } from './../../apis/PracticeAPIs';  // Adjust the import based on your project structure
 import { fetchUserAttributes } from 'aws-amplify/auth';
+import AppointmentDetail from './AppointmentDetail';
 
 const CalendarComponent = () => {
   const [events, setEvents] = useState([]);
+  const [selectedAppointment, setSelectedAppointment] = useState(null);
+  const [isAppointmentDetailOpen, SetIsAppointmentDetailOpen] = useState(false);
   const calendarRef = useRef(null);
 
   const fetchAppointments = async (start, end) => {
@@ -37,11 +40,19 @@ const CalendarComponent = () => {
     }
   };
 
-
-
   const handleDatesSet = (dateInfo) => {
     fetchAppointments(dateInfo.start, dateInfo.end);
   };
+
+  const handleEventClick = (info) => {
+    setSelectedAppointment(info.event);
+    SetIsAppointmentDetailOpen(true);
+  }
+
+  const closeDetail = () => {
+    SetIsAppointmentDetailOpen(false);
+    setSelectedAppointment(null);
+  }
 
   return (
     <div className="calendar-container">
@@ -57,10 +68,9 @@ const CalendarComponent = () => {
         height="auto"
         events={events}
         datesSet={handleDatesSet}
-        eventClick={(info) => {
-          alert(`Clinician: ${info.event.extendedProps.clinician_name}\nClient: ${info.event.title}\nLocation: ${info.event.extendedProps.location_name}\nServices: ${info.event.extendedProps.services_names.join(', ')}\nItems: ${info.event.extendedProps.items_names.join(', ')}\nDuration: ${info.event.extendedProps.duration}`);
-        }}
+        eventClick={handleEventClick}
       />
+      <AppointmentDetail isOpen={isAppointmentDetailOpen} onClose={closeDetail} appointment={selectedAppointment} />
     </div>
   );
 };
