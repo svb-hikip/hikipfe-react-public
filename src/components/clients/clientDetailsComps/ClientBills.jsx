@@ -103,7 +103,6 @@ function ClientBills() {
         </li>
       ))}
     </ul>
-    {JSON.stringify(data, null, 2)}
     </> );
 }
 
