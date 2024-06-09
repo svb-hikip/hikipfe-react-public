@@ -61,7 +61,7 @@ function ClientAppointments() {
                     {({ focus }) => (
                       <a
                         href="#"
-                        onClick={() => navigate(`/appointments/${appointment.uuid}`)}
+                        onClick={() => navigate(`/dashboard/appointments/${appointment.uuid}`)}
                         className={classNames(
                           focus ? 'bg-gray-50' : '',
                           'block px-3 py-1 text-sm leading-6 text-gray-900'

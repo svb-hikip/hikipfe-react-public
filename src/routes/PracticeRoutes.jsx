@@ -11,6 +11,8 @@ import ClientAppointments from '../components/clients/clientDetailsComps/ClientA
 import ClientNotes from '../components/clients/clientDetailsComps/ClientNotes';
 import ClientFiles from '../components/clients/clientDetailsComps/ClientFiles';
 import ClientBills from '../components/clients/clientDetailsComps/ClientBills';
+import AppointmentDetails from '../pages/practice/AppointmentDetails';
+
 const dashboardRoutes = [
   {
     path: "dashboard",
@@ -66,6 +68,11 @@ const dashboardRoutes = [
       {
         path: "appointments",
         element: <Appointments />,
+      },
+      {
+        path: "appointments/:appointmentId",
+        element: <AppointmentDetails />,
+        // loader: fetchClientAppointments,
       },
       {
         path: "billings",
