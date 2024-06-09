@@ -6,6 +6,7 @@ HIKIP is an online web application designed to assist healthcare professionals s
 
 - This source code and any contributions are the sole property of Sachin Bhat and HIKIP Technologies.
 - Create a Git Issue on whatever you are working on, so that everyone knows
+- Create a new branch, make your changes and send, a pull request after you are done. Keep synicing the changes made in master branch so that you are up to date. 
 - No new packages are to be added to the project without prior discussion and approval.
 - API documentation can be accessed at [HIKIP API Documentation](https://hikip-django-e06ccc5f06d1.herokuapp.com/docs/).
 - Check the `package.json` file for the libraries used in this project.
