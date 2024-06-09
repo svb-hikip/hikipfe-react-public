@@ -30,7 +30,7 @@ If you wish to use any other technology, please discuss it with the team first.
 - **Discord:** https://discord.gg/GsRd3C2B
 - **Telegram:** @Svb0866
 
-## Top 10 Contributors!
+## Top 5 Contributors!
 There are 2 openings for Front end Developer (Fully Remote & In-office). Out of top 5 contibutores, 2 may be hired if contribution is satisfactory.  
 - 1
 - 2
