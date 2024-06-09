@@ -3,7 +3,6 @@ import FullCalendar from '@fullcalendar/react';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import timeGridPlugin from '@fullcalendar/timegrid';
 import interactionPlugin from '@fullcalendar/interaction';
-import 'react-datepicker/dist/react-datepicker.css';
 import { useNavigate } from 'react-router-dom';
 
 const AddAppointmentForm = ({onSubmit}) => {
@@ -69,7 +68,7 @@ const AddAppointmentForm = ({onSubmit}) => {
         <input
           type="text"
           id="location-name"
-          value={locationName}
+          value={location}
           onChange={(e) => setLocation(e.target.value)}
           className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
           required
@@ -82,7 +81,7 @@ const AddAppointmentForm = ({onSubmit}) => {
         <input
           type="text"
           id="services-names"
-          value={servicesNames}
+          value={services}
           onChange={(e) => setServices(e.target.value)}
           className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
           required
@@ -95,7 +94,7 @@ const AddAppointmentForm = ({onSubmit}) => {
         <input
           type="text"
           id="items-names"
-          value={itemsNames}
+          value={items}
           onChange={(e) => setItems(e.target.value)}
           className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
           required
