@@ -6,12 +6,15 @@ import Billings from '../pages/practice/Billings';
 import Analytics from '../pages/practice/Analytics';
 import Settings from '../pages/practice/Settings';
 import ClientDetails from '../components/clients/ClientDetails';
-import { fetchClient, fetchClientAppointments, fetchClientBills, fetchClientNotes } from '../apis/ClientAPIs';
+import { fetchClient, fetchClientAppointments,
+  fetchClientBills, fetchClientNotes } from '../apis/ClientAPIs';
+import { fetchAppointmentDetail, fetchBillingDetail } from '../apis/PracticeAPIs';
 import ClientAppointments from '../components/clients/clientDetailsComps/ClientAppointments';
 import ClientNotes from '../components/clients/clientDetailsComps/ClientNotes';
 import ClientFiles from '../components/clients/clientDetailsComps/ClientFiles';
 import ClientBills from '../components/clients/clientDetailsComps/ClientBills';
 import AppointmentDetails from '../pages/practice/AppointmentDetails';
+import BillingDetail from '../pages/practice/BillingDetails';
 
 const dashboardRoutes = [
   {
@@ -72,11 +75,16 @@ const dashboardRoutes = [
       {
         path: "appointments/:appointmentId",
         element: <AppointmentDetails />,
-        // loader: fetchClientAppointments,
+        loader: fetchAppointmentDetail,
       },
       {
         path: "billings",
         element: <Billings />,
+      },
+      {
+        path: "billings/:invoiceId",
+        element: <BillingDetail />,
+        loader: fetchBillingDetail,
       },
       {
         path: "analytics",

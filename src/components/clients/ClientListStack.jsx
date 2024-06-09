@@ -56,7 +56,7 @@ export default function ClientListStack() {
                     <NavLink 
                         to={`${client.uuid}`}>
                       <span className="absolute inset-0" />
-                      {client.client.id}|{client.contact.legal_first_name} {client.contact.legal_last_name}
+                      {client.contact.legal_first_name} {client.contact.legal_last_name}
                     </NavLink>
                   </p>
                   <p className="mt-1 flex text-xs leading-5 text-gray-500">
