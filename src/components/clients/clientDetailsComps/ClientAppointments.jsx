@@ -1,11 +1,11 @@
-import { useLoaderData, useNavigate } from 'react-router-dom';
+import { useLoaderData } from 'react-router-dom';
 import { Menu, MenuButton, MenuItem, MenuItems, Transition } from '@headlessui/react'
 import { EllipsisVerticalIcon } from '@heroicons/react/20/solid'
 import classNames from '../../layout/dashboardComps/helper';
+import { Link } from 'react-router-dom';
 
 function ClientAppointments() {
     const data = useLoaderData();
-    const navigate = useNavigate();
     return ( <>
     {JSON.stringify(data, null, 2)}
     <ul role="list" className="divide-y divide-gray-100">
@@ -59,16 +59,15 @@ function ClientAppointments() {
                 <MenuItems className="absolute right-0 z-10 mt-2 w-32 origin-top-right rounded-md bg-white py-2 shadow-lg ring-1 ring-gray-900/5 focus:outline-none">
                   <MenuItem>
                     {({ focus }) => (
-                      <a
-                        href="#"
-                        onClick={() => navigate(`/appointments/${appointment.uuid}`)}
-                        className={classNames(
-                          focus ? 'bg-gray-50' : '',
-                          'block px-3 py-1 text-sm leading-6 text-gray-900'
-                        )}
-                      >
-                        More Details<span className="sr-only">, {appointment.clinician_name}</span>
-                      </a>
+                          <Link
+                          to={`/dashboard/appointments/${appointment.uuid}`}
+                          className={classNames(
+                            focus ? 'bg-gray-50' : '',
+                            'block px-3 py-1 text-sm leading-6 text-gray-900'
+                          )}
+                        >
+                          More Details<span className="sr-only">, {appointment.clinician_name}</span>
+                        </Link>
                     )}
                   </MenuItem>
                   <MenuItem>

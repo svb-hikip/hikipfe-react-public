@@ -1,9 +1,9 @@
-import React, { useEffect, useState, useRef } from 'react';
+import { useState, useRef } from 'react';
 import FullCalendar from '@fullcalendar/react';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import timeGridPlugin from '@fullcalendar/timegrid';
 import interactionPlugin from '@fullcalendar/interaction';
-import { fetchPracticeAppointments } from './../../apis/PracticeAPIs';  // Adjust the import based on your project structure
+import { fetchPracticeAppointments } from '../../apis/PracticeAPIs';  // Adjust the import based on your project structure
 import { fetchUserAttributes } from 'aws-amplify/auth';
 
 const CalendarComponent = () => {
