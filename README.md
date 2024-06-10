@@ -4,6 +4,12 @@ HIKIP is an online web application designed to assist healthcare professionals s
 
 ## Guidelines for Collaborators
 
+**This code gets updated rapidly so whenever you do a small commit, push it immediately so that others can take note, otherwise you will keep working on things which are already done by others** 
+
+To contribute to a public repository you will have to fork that repository, creating your version which you will have write access to, write to that version, and then send a pull request from that version back to the original repository.
+
+https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/creating-a-pull-request-from-a-fork
+
 - This source code and any contributions are the sole property of Sachin Bhat and HIKIP Technologies.
 - Create a Git Issue on whatever you are working on, so that everyone knows
 - Create a new branch, make your changes and send a pull request after you are done. Keep Syncing the changes made in master branch so that you are up to date. 
