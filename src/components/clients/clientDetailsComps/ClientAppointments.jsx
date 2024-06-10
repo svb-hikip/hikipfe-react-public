@@ -21,13 +21,13 @@ function ClientAppointments() {
             </div>
             <div className="flex items-center justify-between gap-x-4 sm:w-1/2 sm:flex-none">
             <div className="hidden sm:block">
-              <p className="text-sm leading-6 text-gray-900">
+              <span className="text-sm leading-6 text-gray-900">
               <ul className="list-outside">
                   {appointment.services_names.map((service, index) => (
                     <li key={index}>{service}</li>
                   ))}
                 </ul>
-              </p>
+              </span>
               </div>
               </div>
           </div>

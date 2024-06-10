@@ -1,6 +1,6 @@
 import { useLoaderData } from 'react-router-dom';
 import { Fragment } from 'react'
-import { Menu, Transition } from '@headlessui/react'
+import { Menu, MenuButton, MenuItem, MenuItems, Transition } from '@headlessui/react'
 import { EllipsisVerticalIcon } from '@heroicons/react/20/solid'
 import classNames from '../../layout/dashboardComps/helper';
 
@@ -51,15 +51,15 @@ function ClientBills() {
                 {new Date(invoice.appointment_date).toLocaleString()}
               </time>
               </p>
-                <p className="mt-1 text-xs leading-5 text-gray-500">
-                  Duration: fghfgh
-                </p>
+                {/* <p className="mt-1 text-xs leading-5 text-gray-500">
+                  Duration: hrs
+                </p> */}
             </div>
             <Menu as="div" className="relative flex-none">
-              <Menu.Button className="-m-2.5 block p-2.5 text-gray-500 hover:text-gray-900">
+              <MenuButton className="-m-2.5 block p-2.5 text-gray-500 hover:text-gray-900">
                 <span className="sr-only">Open options</span>
                 <EllipsisVerticalIcon className="h-5 w-5" aria-hidden="true" />
-              </Menu.Button>
+              </MenuButton>
               <Transition
                 as={Fragment}
                 enter="transition ease-out duration-100"
@@ -69,8 +69,8 @@ function ClientBills() {
                 leaveFrom="transform opacity-100 scale-100"
                 leaveTo="transform opacity-0 scale-95"
               >
-                <Menu.Items className="absolute right-0 z-10 mt-2 w-32 origin-top-right rounded-md bg-white py-2 shadow-lg ring-1 ring-gray-900/5 focus:outline-none">
-                  <Menu.Item>
+                <MenuItems className="absolute right-0 z-10 mt-2 w-32 origin-top-right rounded-md bg-white py-2 shadow-lg ring-1 ring-gray-900/5 focus:outline-none">
+                  <MenuItem>
                     {({ active }) => (
                       <a
                         href="#"
@@ -79,11 +79,11 @@ function ClientBills() {
                           'block px-3 py-1 text-sm leading-6 text-gray-900'
                         )}
                       >
-                        View profile<span className="sr-only">, {appointment.clinician.legal_first_name}</span>
+                        View profile<span className="sr-only">, {invoice?.clinician?.legal_first_name}</span>
                       </a>
                     )}
-                  </Menu.Item>
-                  <Menu.Item>
+                  </MenuItem>
+                  <MenuItem>
                     {({ active }) => (
                       <a
                         href="#"
@@ -92,11 +92,11 @@ function ClientBills() {
                           'block px-3 py-1 text-sm leading-6 text-gray-900'
                         )}
                       >
-                        Message<span className="sr-only">, {appointment.clinician.legal_first_name}</span>
+                        Message<span className="sr-only">, {invoice?.clinician?.legal_first_name}</span>
                       </a>
                     )}
-                  </Menu.Item>
-                </Menu.Items>
+                  </MenuItem>
+                </MenuItems>
               </Transition>
             </Menu>
           </div>
