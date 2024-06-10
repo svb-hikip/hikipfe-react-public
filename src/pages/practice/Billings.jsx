@@ -31,7 +31,13 @@ export default function Billings() {
   }, []);
 
   if(loading) {
-    return <div>Loading...</div>;
+    return (
+      <div>
+        Loading...
+        <div className='flex justify-center items-center min-h-screen'>
+          <div className='loader ease-in rounded-full border-4 border-gray-400 h-14 w-14'></div>
+        </div>
+      </div>);
   }
 
   if(error) {
