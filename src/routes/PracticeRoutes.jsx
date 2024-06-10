@@ -1,6 +1,6 @@
+import { lazy, Suspense } from 'react';
 import { Navigate } from 'react-router-dom';
 import DashboardLayout from '../components/layout/PracticeDashboard';
-import Clients from '../pages/practice/Clients';
 import Appointments from '../pages/practice/Appointments';
 import Billings from '../pages/practice/Billings';
 import Analytics from '../pages/practice/Analytics';
@@ -15,6 +15,10 @@ import ClientFiles from '../components/clients/clientDetailsComps/ClientFiles';
 import ClientBills from '../components/clients/clientDetailsComps/ClientBills';
 import AppointmentDetails from '../pages/practice/AppointmentDetails';
 import BillingDetail from '../pages/practice/BillingDetails';
+import Loading from '../components/utils/Loading';
+
+// lazy loading
+const Clients = lazy(() => import('../pages/practice/Clients'));
 
 const dashboardRoutes = [
   {
@@ -27,7 +31,11 @@ const dashboardRoutes = [
       },
       {
         path: "clients",
-        element: <Clients />,
+        element: (
+          <Suspense fallback={<Loading />}>
+            <Clients />
+          </Suspense> 
+        ),
       },
       {
         path: "clients/:clientId",
