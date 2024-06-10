@@ -40,16 +40,6 @@ export default function ClientListStack() {
   setIsLoading(true);
 }, [isLoading]); // Triggers the effect by changing isLoading.
 
-if(isLoading) {
-  return (
-    <div>
-      Loading...
-      <div className='flex justify-center items-center min-h-screen'>
-        <div className='loader ease-in rounded-full border-4 border-gray-400 h-14 w-14'></div>
-      </div>
-    </div>);
-}
-
   return (
     <>
       { isLoading && !totalCount ? (
