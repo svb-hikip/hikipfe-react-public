@@ -5,7 +5,7 @@ import timeGridPlugin from '@fullcalendar/timegrid';
 import interactionPlugin from '@fullcalendar/interaction';
 import { fetchPracticeAppointments } from '../../apis/PracticeAPIs';  // Adjust the import based on your project structure
 import { fetchUserAttributes } from 'aws-amplify/auth';
-import AppointmentDetail from '../../components/appointments/AppointmentDetail';
+import AppointmentDetail from '../../components/appointments/AppointmentCalendarDetail';
 import AddAppointmentForm from '../../components/appointments/AddAppointmentForm';
 
 const CalendarComponent = () => {
