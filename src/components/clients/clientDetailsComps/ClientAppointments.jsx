@@ -7,7 +7,6 @@ import { Link } from 'react-router-dom';
 function ClientAppointments() {
     const data = useLoaderData();
     return ( <>
-    {JSON.stringify(data, null, 2)}
     <ul role="list" className="divide-y divide-gray-100">
       {data.map((appointment) => (
         <li key={appointment.uuid} className="flex justify-between gap-x-6 py-5">
