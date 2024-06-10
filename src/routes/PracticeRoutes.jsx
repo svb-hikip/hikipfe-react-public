@@ -1,6 +1,6 @@
+import {lazy, Suspense } from 'react';
 import { Navigate } from 'react-router-dom';
 import DashboardLayout from '../components/layout/PracticeDashboard';
-import Clients from '../pages/practice/Clients';
 import Appointments from '../pages/practice/Appointments';
 import Billings from '../pages/practice/Billings';
 import Analytics from '../pages/practice/Analytics';
@@ -11,6 +11,11 @@ import ClientAppointments from '../components/clients/clientDetailsComps/ClientA
 import ClientNotes from '../components/clients/clientDetailsComps/ClientNotes';
 import ClientFiles from '../components/clients/clientDetailsComps/ClientFiles';
 import ClientBills from '../components/clients/clientDetailsComps/ClientBills';
+import Loading from '../components/utils/Loading';
+
+// Lazy loading or dynamic loading
+const Clients = lazy(() => import('../pages/practice/Clients'));
+
 const dashboardRoutes = [
   {
     path: "dashboard",
@@ -22,12 +27,16 @@ const dashboardRoutes = [
       },
       {
         path: "clients",
-        element: <Clients />,
+        element: (
+          <Suspense fallback={<Loading />}>
+            <Clients />
+          </Suspense>
+        ),
       },
       {
         path: "clients/:clientId",
         element: <ClientDetails />,
-        loader:fetchClient,
+        loader: fetchClient,
         children: [
           {
             index: true,
@@ -55,13 +64,13 @@ const dashboardRoutes = [
                 element: <ClientNotes />,
                 loader: fetchClientNotes,
               },
-            ]
+            ],
           },
           {
             path: "files",
             element: <ClientFiles />,
           },
-        ]
+        ],
       },
       {
         path: "appointments",
