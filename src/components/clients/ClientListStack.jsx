@@ -33,18 +33,18 @@ export default function ClientListStack() {
   
     fetchAndProcess();
   
-  }, [isLoading, page]); // Dependency on isLoading ensures this effect runs after it changes.
+  }, [isLoading, page]);
 
   const loadMoreClients = useCallback(() => {
   if (isLoading) return;
   setIsLoading(true);
-}, [isLoading]); // Triggers the effect by changing isLoading.
+}, [isLoading]); 
 
   return (
     <>
       { isLoading && !totalCount ? (
         <>
-          <span className=''>Loading Clients ...</span>
+          <span className='flex items-center justify-center font-bold'>Loading Clients Please Wait...</span>
           <Loading />
         </>
       ) : (
