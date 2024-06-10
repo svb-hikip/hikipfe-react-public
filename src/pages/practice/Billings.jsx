@@ -1,12 +1,13 @@
 import { fetchUserAttributes } from 'aws-amplify/auth';
 import { fetchPracticeBills } from '../../apis/PracticeAPIs';
-import { useEffect, useState } from 'react';
-import { Fragment } from 'react';
+import { useEffect, useState, Fragment } from 'react';
 import { Link } from 'react-router-dom';
 import classNames from '../../components/layout/dashboardComps/helper'
 
 export default function Billings() {
   const [bills, setBills] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   // Fetch bills from the API
   const fetchBills = async () => {
@@ -16,8 +17,11 @@ export default function Billings() {
         practiceId: attributes['custom:tenantId']
       });
       setBills(response.results);
+      setLoading(false);
     } catch (error) {
       console.error('Failed to fetch bills', error);
+      setError("Failed to fetch bills");
+      setLoading(false);
     }
   };
 
@@ -26,13 +30,17 @@ export default function Billings() {
     fetchBills();
   }, []);
 
+  if(loading) {
+    return <div>Loading...</div>;
+  }
 
+  if(error) {
+    return <div>{error}</div>;
+  }
 
   return (
     <>
       {/* Debugging purpose: Display raw bills data */}
-      {JSON.stringify(bills, null, 2)}
-
       <div>
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <h2 className="mx-auto max-w-2xl text-base font-semibold leading-6 text-gray-900 lg:mx-0 lg:max-w-none">
