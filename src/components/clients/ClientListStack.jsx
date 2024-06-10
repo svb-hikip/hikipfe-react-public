@@ -3,7 +3,7 @@ import InfiniteScroll from 'react-infinite-scroller';
 import { ChevronRightIcon } from '@heroicons/react/20/solid';
 import { fetchClients } from '../../apis/ClientAPIs';
 import { NavLink } from 'react-router-dom';
-import Loader from '../layout/Loader/loader'
+import Loading from '../utils/Loading';
 
 export default function ClientListStack() {
   const [clientList, setClientList] = useState([]);
@@ -41,53 +41,50 @@ export default function ClientListStack() {
 
   return (
     <>
-      <span>{totalCount} Clients</span>
-      <Suspense fallback={<Loader />}>
-      {/* adding a loader for lazy loading.. */}
-      {isLoading ? <Loader /> :
-      <InfiniteScroll
-        loadMore={loadMoreClients}
-        hasMore={hasMore}
-        // loader={<div className="loader" key={0}>Loading ...</div>}
-        loader={<Loader key={0}/>}
-      >
-        <ul role="list" className="divide-y divide-gray-200 overflow-hidden bg-white shadow-sm ring-1 ring-gray-900/5 sm:rounded-xl">
-          {clientList.map((client, index) => ( //Adding a fallback value for the key attribute by using client.uuid || index.
-            client && client.contact ? (
-              <li key={client.uuid || index} className="relative flex justify-between gap-x-6 px-4 py-5 hover:bg-gray-50 sm:px-6">
-                <div className="flex min-w-0 gap-x-4">
-                  <div className="min-w-0 flex-auto">
-                    <p className="text-sm font-semibold leading-6 text-gray-900">
-                      <NavLink to={`${client.uuid}`}>
-                        <span className="absolute inset-0" /> 
-                        {/* Adding a check to ensure client.client is defined before accessing client.client.id. */}
-                        {client.client && client.client.id}|{client.contact.legal_first_name} {client.contact.legal_last_name}
-                      </NavLink>
-                    </p>
-                    <p className="mt-1 flex text-xs leading-5 text-gray-500">
-                      {client.contact.contactemail_set && client.contact.contactemail_set.map(email => email.email).join(', ')}
-                      {client.contact.contactphone_set && client.contact.contactphone_set.map(phone => phone.phone_number).join(', ')}
-                    </p>
+      { isLoading && !totalCount ? (
+        <>
+          <span className=''>Loading Clients ...</span>
+          <Loading />
+        </>
+      ) : (
+        <>
+        <h2 className='text-danger'>
+          If you are not able to see clients list, you may have not logged in using the test credentials. Logout from current account using top right corner click "Tim Cook".
+          Login using ID:svb@hikip.com PW:PaWv2b5Fy@n6BSi to see test data. Please do not remove this message in your commits.
+          
+        </h2>
+        <p>--</p>
+          <span>{totalCount} Clients</span>
+          <InfiniteScroll
+            loadMore={loadMoreClients}
+            hasMore={hasMore}
+            loader={<div className="loader" key={0}>Loading ...</div>}
+          >
+            <ul role="list" className="divide-y divide-gray-200 overflow-hidden bg-white shadow-sm ring-1 ring-gray-900/5 sm:rounded-xl">
+              {clientList.map(client => (
+                <li key={client.uuid} className="relative flex justify-between gap-x-6 px-4 py-5 hover:bg-gray-50 sm:px-6">
+                  <div className="flex min-w-0 gap-x-4">
+                    <div className="min-w-0 flex-auto">
+                      <p className="text-sm font-semibold leading-6 text-gray-900">
+                        <NavLink 
+                            to={`${client.uuid}`}>
+                          <span className="absolute inset-0" />
+                          {client.contact.legal_first_name} {client.contact.legal_last_name}
+                        </NavLink>
+                      </p>
+                      <p className="mt-1 flex text-xs leading-5 text-gray-500">
+                        {client.contact.contactemail_set.map(email => email.email).join(', ')}
+                        {client.contact.contactphone_set.map(phone => phone.phone_number).join(', ')}
+                      </p>
+                    </div>
                   </div>
-                </div>
-                <ChevronRightIcon className="h-5 w-5 flex-none text-gray-400" aria-hidden="true" />
-              </li>
-            ) : (
-              <li key={index} className="relative flex justify-between gap-x-6 px-4 py-5 hover:bg-gray-50 sm:px-6">
-                <div className="flex min-w-0 gap-x-4">
-                  <div className="min-w-0 flex-auto">
-                    <p className="text-sm font-semibold leading-6 text-gray-900">
-                      Client data is incomplete
-                    </p>
-                  </div>
-                </div>
-              </li>
-            )
-          ))}
-        </ul>
-      </InfiniteScroll>
-}
-</Suspense>
+                  <ChevronRightIcon className="h-5 w-5 flex-none text-gray-400" aria-hidden="true" />
+                </li>
+              ))}
+            </ul>
+          </InfiniteScroll>
+        </>
+      )}
     </>
   );
 }

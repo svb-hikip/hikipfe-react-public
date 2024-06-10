@@ -21,8 +21,9 @@ export default function ClientNotes() {
   }, [selectedNotesList, navigate, clientId]);
 
   return (
+    <>
+    {JSON.stringify(data)}
     <fieldset>
-      {JSON.stringify(data, null, 2)}
       <RadioGroup
         value={selectedNotesList}
         onChange={setSelectedNotesList}
@@ -69,5 +70,6 @@ export default function ClientNotes() {
         ))}
       </RadioGroup>
     </fieldset>
+    </>
   );
 }
