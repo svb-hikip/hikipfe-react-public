@@ -6,6 +6,8 @@ HIKIP is an online web application designed to assist healthcare professionals s
 
 **This code gets updated rapidly so whenever you do a small commit, push it immediately so that others can take note, otherwise you will keep working on things which are already done by others** 
 
+CHECK THE ISSUES PAGE FOR TASK LIST 
+
 To contribute to a public repository you will have to fork that repository, creating your version which you will have write access to, write to that version, and then send a pull request from that version back to the original repository.
 
 https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/creating-a-pull-request-from-a-fork
@@ -39,8 +41,8 @@ If you wish to use any other technology, please discuss it with the team first.
 
 ## Top 5 Contributors!
 There are 2 openings for Front end Developer (Fully Remote & In-office). Out of top 5 contibutores, 2 may be hired if contribution is satisfactory.  
-- 1
-- 2
-- 3
-- 4
-- 5
+
+
+Thank you for your Contributions!
+anthonym995 - Anthony M
+Kiruba2602 - Kirubakaran

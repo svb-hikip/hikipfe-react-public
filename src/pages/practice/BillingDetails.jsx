@@ -105,10 +105,10 @@ function classNames(...classes) {
 
 export default function BillingDetail() {
   const data = useLoaderData();
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const [selected, setSelected] = useState(moods[5])
   return (
     <div>
+          {JSON.stringify(data)}
       <main>
         <header className="relative isolate pt-16">
           <div className="absolute inset-0 -z-10 overflow-hidden" aria-hidden="true">

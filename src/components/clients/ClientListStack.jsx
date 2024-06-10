@@ -49,6 +49,12 @@ export default function ClientListStack() {
         </>
       ) : (
         <>
+        <h2 className='text-danger'>
+          If you are not able to see clients list, you may have not logged in using the test credentials. Logout from current account using top right corner click "Tim Cook".
+          Login using ID:svb@hikip.com PW:PaWv2b5Fy@n6BSi to see test data. Please do not remove this message in your commits.
+          
+        </h2>
+        <p>--</p>
           <span>{totalCount} Clients</span>
           <InfiniteScroll
             loadMore={loadMoreClients}
