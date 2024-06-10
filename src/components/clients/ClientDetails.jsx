@@ -22,7 +22,11 @@ function ClientDetails() {
         <dl className="grid grid-cols-1 sm:grid-cols-2">
           <div className="border-t border-gray-100 px-4 py-6 sm:col-span-1 sm:px-0">
             <dt className="text-sm font-medium leading-6 text-gray-900">Full name</dt>
+<<<<<<< HEAD
             <dd className="mt-1 text-sm leading-6 text-gray-700 sm:mt-2">{data?.contact?.legal_first_name} {data?.contact?.legal_last_name} | {data?.client?.client_type} | {data?.client?.billing_type}</dd>
+=======
+            <dd className="mt-1 text-sm leading-6 text-gray-700 sm:mt-2">{data.contact.legal_first_name} {data.contact.legal_last_name} | {data.client_type} | {data.billing_type}</dd>
+>>>>>>> 75131caebb0dcefe775c014f3d42b668cbb0ce9f
           </div>
           <div className="border-t border-gray-100 px-4 py-6 sm:col-span-1 sm:px-0">
             <dt className="text-sm font-medium leading-6 text-gray-900">Application for</dt>

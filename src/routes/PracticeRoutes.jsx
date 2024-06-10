@@ -6,15 +6,22 @@ import Billings from '../pages/practice/Billings';
 import Analytics from '../pages/practice/Analytics';
 import Settings from '../pages/practice/Settings';
 import ClientDetails from '../components/clients/ClientDetails';
-import { fetchClient, fetchClientAppointments, fetchClientBills, fetchClientNotes } from '../apis/ClientAPIs';
+import { fetchClient, fetchClientAppointments,
+  fetchClientBills, fetchClientNotes } from '../apis/ClientAPIs';
+import { fetchAppointmentDetail, fetchBillingDetail } from '../apis/PracticeAPIs';
 import ClientAppointments from '../components/clients/clientDetailsComps/ClientAppointments';
 import ClientNotes from '../components/clients/clientDetailsComps/ClientNotes';
 import ClientFiles from '../components/clients/clientDetailsComps/ClientFiles';
 import ClientBills from '../components/clients/clientDetailsComps/ClientBills';
+<<<<<<< HEAD
 import Loading from '../components/utils/Loading';
 
 // Lazy loading or dynamic loading
 const Clients = lazy(() => import('../pages/practice/Clients'));
+=======
+import AppointmentDetails from '../pages/practice/AppointmentDetails';
+import BillingDetail from '../pages/practice/BillingDetails';
+>>>>>>> 75131caebb0dcefe775c014f3d42b668cbb0ce9f
 
 const dashboardRoutes = [
   {
@@ -77,8 +84,18 @@ const dashboardRoutes = [
         element: <Appointments />,
       },
       {
+        path: "appointments/:appointmentId",
+        element: <AppointmentDetails />,
+        loader: fetchAppointmentDetail,
+      },
+      {
         path: "billings",
         element: <Billings />,
+      },
+      {
+        path: "billings/:invoiceId",
+        element: <BillingDetail />,
+        loader: fetchBillingDetail,
       },
       {
         path: "analytics",
