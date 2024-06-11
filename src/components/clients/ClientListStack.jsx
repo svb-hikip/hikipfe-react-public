@@ -69,14 +69,14 @@ export default function ClientListStack() {
                           {client.contact.legal_first_name} {client.contact.legal_last_name}
                         </NavLink>
                       </p>
-                     <p className="mt-1 text-xs leading-5 text-gray-500">
-  <EnvelopeIcon className="h-4 w-4 mr-1 text-gray-400 inline-block" aria-hidden="true" />
-  {client.contact.contactemail_set.map(email => (
-    <div key={email.email} className="truncate hover:underline">
-      {email.email} ({email.type})
-    </div>
-  ))}
-</p>
+                      <p className="mt-1 text-xs leading-5 text-gray-500">
+                        {client.contact.contactemail_set.map(email => (
+                          <div key={email.email} className="flex items-center">
+                            <EnvelopeIcon className="h-4 w-4 mr-1 text-gray-400 inline-block" aria-hidden="true" />
+                            <span className="truncate hover:underline">{email.email} ({email.type})</span>
+                          </div>
+                        ))}
+                      </p>
 
                     </div>
                   </div>
@@ -94,7 +94,7 @@ export default function ClientListStack() {
                   <div className="flex min-w-0 gap-x-4 sm:w-1/3 sm:flex-none">
                     <div className="min-w-0 flex-auto">
                       <p className="text-sm font-semibold leading-6 text-gray-900">Client Details</p>
-                     {/* Added the badges and pills here.. still we need to iprove it */}
+                      {/* Added the badges and pills here.. still we need to iprove it */}
                       <div className="mt-2 flex gap-2">
                         <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-indigo-100 text-indigo-800">
                           {client.client_type}
