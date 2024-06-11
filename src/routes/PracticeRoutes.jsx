@@ -6,9 +6,8 @@ import Billings from '../pages/practice/Billings';
 import Analytics from '../pages/practice/Analytics';
 import Settings from '../pages/practice/Settings';
 import ClientDetails from '../components/clients/ClientDetails';
-import { fetchClient, fetchClientAppointments,
-  fetchClientBills, fetchClientNotes } from '../apis/ClientAPIs';
-import { fetchAppointmentDetail, fetchBillingDetail } from '../apis/PracticeAPIs';
+import { fetchClient,fetchDntNotes, fetchClinicianNotes, fetchProgressNotes } from '../apis/ClientAPIs';
+import { fetchPracticeBills, fetchPracticeAppointments } from '../apis/PracticeAPIs';
 import ClientAppointments from '../components/clients/clientDetailsComps/ClientAppointments';
 import ClientNotes from '../components/clients/clientDetailsComps/ClientNotes';
 import ClientFiles from '../components/clients/clientDetailsComps/ClientFiles';
@@ -16,9 +15,7 @@ import ClientBills from '../components/clients/clientDetailsComps/ClientBills';
 import AppointmentDetails from '../pages/practice/AppointmentDetails';
 import BillingDetail from '../pages/practice/BillingDetails';
 import Loading from '../components/utils/Loading';
-
-// lazy loading
-const Clients = lazy(() => import('../pages/practice/Clients'));
+import Clients from '../pages/practice/Clients';
 
 const dashboardRoutes = [
   {
@@ -44,17 +41,17 @@ const dashboardRoutes = [
         children: [
           {
             index: true,
-            element: <Navigate to="appointments" replace />, // Redirects /dashboard to /dashboard/clients
+            element: <Navigate to="appointments" replace />
           },
           {
             path: "appointments",
             element: <ClientAppointments />,
-            loader: fetchClientAppointments,
+            loader: fetchPracticeAppointments,
           },
           {
             path: "bills",
             element: <ClientBills />,
-            loader: fetchClientBills,
+            loader: fetchPracticeBills,
           },
           {
             path: "notes",
@@ -64,9 +61,19 @@ const dashboardRoutes = [
                 element: <Navigate to="progress" replace />, // Redirects /dashboard to /dashboard/clients
               },
               {
-                path: ":noteType",
+                path: "progress",
                 element: <ClientNotes />,
-                loader: fetchClientNotes,
+                loader: fetchProgressNotes,
+              },
+              {
+                path: "clinician",
+                element: <ClientNotes />,
+                loader: fetchClinicianNotes,
+              },
+              {
+                path: "dnt",
+                element: <ClientNotes />,
+                loader: fetchDntNotes,
               },
             ]
           },
@@ -83,16 +90,17 @@ const dashboardRoutes = [
       {
         path: "appointments/:appointmentId",
         element: <AppointmentDetails />,
-        loader: fetchAppointmentDetail,
+        loader: fetchPracticeAppointments,
       },
       {
         path: "billings",
         element: <Billings />,
+        loader: fetchPracticeBills
       },
       {
         path: "billings/:invoiceId",
         element: <BillingDetail />,
-        loader: fetchBillingDetail,
+        loader: fetchPracticeBills,
       },
       {
         path: "analytics",

@@ -1,3 +1,8 @@
+# API ENDPOINTS AND DOCS
+https://hikip-django-e06ccc5f06d1.herokuapp.com/api/schema/swagger-ui/
+
+https://hikip-django-e06ccc5f06d1.herokuapp.com/api/schema/redoc/
+
 # HIKIP React App
 
 HIKIP is an online web application designed to assist healthcare professionals such as psychotherapists, acupuncturists, and physiotherapists in managing their clients, appointments, and patient notes. The application also includes a client video call feature and a client portal where clients can log in to complete the onboarding process.
