@@ -5,10 +5,10 @@ import classNames from '../../layout/dashboardComps/helper';
 import { Link } from 'react-router-dom';
 
 function ClientAppointments() {
-    const data = useLoaderData();
+    const response = useLoaderData();
     return ( <>
     <ul role="list" className="divide-y divide-gray-100">
-      {data.map((appointment) => (
+      {response.data.map((appointment) => (
         <li key={appointment.uuid} className="flex justify-between gap-x-6 py-5">
           <div className="flex min-w-0 gap-x-4">
             <div className="min-w-0 flex-auto">
@@ -23,7 +23,7 @@ function ClientAppointments() {
             <div className="hidden sm:block">
               <span className="text-sm leading-6 text-gray-900">
               <ul className="list-outside">
-                  {appointment.services_names.map((service, index) => (
+                  {appointment.services_name.map((service, index) => (
                     <li key={index}>{service}</li>
                   ))}
                 </ul>

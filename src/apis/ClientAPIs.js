@@ -1,5 +1,9 @@
 import { BaseApi, handleApiError } from "./BaseAPI";
+
 const clientsEndpoint = '/client/clients/';
+const progressNotesEndpoint = '/client/progress-notes'
+const clinicianNotesEndpoint = '/client/clinician-notes'
+const dntNotesEndpoint = '/client/diagnosis-treatment-plans'
 
 export const fetchClients = async (page=1) => {
     try {
@@ -27,33 +31,39 @@ export const fetchClient = async ({params}) => {
     }
 };
 
-export const fetchClientAppointments = async ({params}) => {
+export const fetchProgressNotes = async ({params}) => {
     try {
-        const response = await BaseApi.get(`${clientsEndpoint}${params.clientId}/appointments`);
-        return response.data
+      const response = await BaseApi.get(`${progressNotesEndpoint}/${params.UUID? params.UUID : ""}`, {
+        params: { client: params.clientId, appointment: params.appointmentId,
+         },
+      });
+      return response;
     } catch (error) {
-        handleApiError(error);
-        throw new Error('Failed to fetch clients');
+      handleApiError(error);
+      throw new Error('Failed to fetch invoices');
     }
-};
-
-export const fetchClientBills = async ({params}) => {
+  };
+  export const fetchClinicianNotes = async ({params}) => {
     try {
-        const response = await BaseApi.get(`${clientsEndpoint}${params.clientId}/bills`);
-        return response.data
+      const response = await BaseApi.get(`${clinicianNotesEndpoint}/${params.UUID? params.UUID : ""}`, {
+        params: { client: params.clientId, appointment: params.appointmentId,
+         },
+      });
+      return response;
     } catch (error) {
-        handleApiError(error);
-        throw new Error('Failed to fetch clients');
+      handleApiError(error);
+      throw new Error('Failed to fetch invoices');
     }
-};
-
-export const fetchClientNotes = async ({params}) => {
+  };
+  export const fetchDntNotes = async ({params}) => {
     try {
-        console.log(params, "Fetching notes");
-        const response = await BaseApi.get(`${clientsEndpoint}${params.clientId}/notes/${params.noteType}`);
-        return response.data
+      const response = await BaseApi.get(`${dntNotesEndpoint}/${params.UUID? params.UUID : ""}`, {
+        params: { client: params.clientId, appointment: params.appointmentId,
+         },
+      });
+      return response;
     } catch (error) {
-        handleApiError(error);
-        throw new Error('Failed to fetch clients');
+      handleApiError(error);
+      throw new Error('Failed to fetch invoices');
     }
-};
+  };
