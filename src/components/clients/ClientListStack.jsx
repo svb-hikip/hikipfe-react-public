@@ -58,7 +58,7 @@ export default function ClientListStack() {
             hasMore={hasMore}
             loader={<div className="loader" key={0}>Loading ...</div>}
           >
-            <ul role="list" className="divide-y divide-gray-200 overflow-hidden bg-white shadow-lg ring-1 ring-gray-900/10 sm:rounded-lg">
+            <ul role="list" className="divide-y divide-gray-200 overflow-hidden bg-white">
               {clientList.map(client => (
                 <li key={client.uuid} className="relative flex flex-col sm:flex-row justify-between gap-y-4 gap-x-6 px-4 py-5 hover:bg-gray-50 sm:px-6">
                   <div className="flex min-w-0 gap-x-4 pr-6 sm:w-1/3 sm:flex-none">
@@ -77,18 +77,19 @@ export default function ClientListStack() {
                           </div>
                         ))}
                       </p>
-
                     </div>
                   </div>
                   <div className="flex min-w-0 gap-x-4 sm:w-1/3 sm:flex-none">
                     <div className="min-w-0 flex-auto">
                       <p className="text-sm font-semibold leading-6 text-gray-900">Phones</p>
-                      <p className="mt-1 flex text-xs leading-5 text-gray-500">
-                        <PhoneIcon className="h-4 w-4 mr-1 text-gray-400" aria-hidden="true" />
+                      <div className="mt-1 text-xs leading-5 text-gray-500">
                         {client.contact.contactphone_set.map(phone => (
-                          <span key={phone.phone_number}>{phone.phone_number} ({phone.type})</span>
-                        )).reduce((prev, curr) => [prev, ', ', curr])}
-                      </p>
+                          <div key={phone.phone_number} className="flex items-center">
+                            <PhoneIcon className="h-4 w-4 mr-1 text-gray-400" aria-hidden="true" />
+                            <span className="truncate hover:underline">{phone.phone_number} ({phone.type})</span>
+                          </div>
+                        ))}
+                      </div>
                     </div>
                   </div>
                   <div className="flex min-w-0 gap-x-4 sm:w-1/3 sm:flex-none">
