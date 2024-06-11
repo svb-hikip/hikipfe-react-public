@@ -24,12 +24,32 @@ const Loading = () => {
     opacity: "0.8",
   };
 
+  const spinKeyframes = `
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+  `;
+
+  const pulseKeyframes = `
+    @keyframes pulse {
+      0%, 100% { opacity: 0.8; }
+      50% { opacity: 0.5; }
+    }
+  `;
+
   return (
-    <div className="flex items-center justify-center min-h-screen">
-      <div className="loader mb-52" style={loaderStyles}>
-        <div className="loader-inner" style={loaderInnerStyles}></div>
+    <>
+      <style>
+        {spinKeyframes}
+        {pulseKeyframes}
+      </style>
+      <div className="flex items-center justify-center min-h-screen">
+        <div className="loader mb-52" style={loaderStyles}>
+          <div className="loader-inner" style={loaderInnerStyles}></div>
+        </div>
       </div>
-    </div>
+    </>
   );
 };
 
