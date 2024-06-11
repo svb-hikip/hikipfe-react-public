@@ -1,3 +1,4 @@
+import axios from "axios";
 import { BaseApi, handleApiError } from "./BaseAPI";
 const clientsEndpoint = '/client/clients/';
 
@@ -55,5 +56,15 @@ export const fetchClientNotes = async ({params}) => {
     } catch (error) {
         handleApiError(error);
         throw new Error('Failed to fetch clients');
+    }
+};
+
+export const addNewClient = async (clientData) => {
+    try {
+        const response = await axios.post(`${clientsEndpoint}`, clientData);
+        return response.data;
+    } catch (error) {
+        console.error('Error adding client: ',error);
+        throw error;
     }
 };

@@ -1,9 +1,36 @@
 import { Fragment, useState } from 'react';
 import { Dialog, DialogPanel, DialogTitle, Transition, TransitionChild } from '@headlessui/react'
 import { XMarkIcon } from '@heroicons/react/24/outline'
+import { addNewClient } from '../../apis/ClientAPIs';
 
 
 const AddNewClient = ({isOpen, setIsOpen}) => {
+    const [formData, setFormData] = useState({
+        firstname: '',
+        lastname: '',
+        email: '',
+        phonenumber: '',
+        alternatenumber: '',
+        description: ''
+    });
+
+    const handleChange = (e) => {
+        const {name, value} = e.target;
+        setFormData({
+            ...formData,
+            [name]: value
+        });
+    };
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        try {
+            await addNewClient(formData);
+            setIsOpen(false);
+        } catch (error) {
+            console.error('Failed to add client: ', error);
+        }
+    }
     return (
         <Transition show={isOpen} as={Fragment} >
             <Dialog as="div" className="relative z-50" onClose={() => setIsOpen(false)} >
@@ -32,7 +59,7 @@ const AddNewClient = ({isOpen, setIsOpen}) => {
                                 leaveTo="translate-x-full"
                             >
                                 <DialogPanel className="pointer-events-auto w-screen max-w-md">
-                                    <form className="flex h-full flex-col overflow-y-scroll bg-white shadow-xl">
+                                    <form className="flex h-full flex-col overflow-y-scroll bg-white shadow-xl" onSubmit={handleSubmit}>
                                         <div className='flex-1'>
                                             <div className="bg-gray-50 px-4 py-6 sm:px-6">
                                                 <div className="block items-start justify-around space-y-2">
@@ -68,6 +95,8 @@ const AddNewClient = ({isOpen, setIsOpen}) => {
                                                         name="client-firstname"
                                                         id="client-firstname"
                                                         className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                                                        value={formData.firstname}
+                                                        onChange={handleChange}
                                                     />
                                                 </div>
                                             </div>
@@ -84,6 +113,8 @@ const AddNewClient = ({isOpen, setIsOpen}) => {
                                                         name="client-lastname"
                                                         id="client-lastname"
                                                         className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                                                        value={formData.lastname}
+                                                        onChange={handleChange}
                                                     />
                                                 </div>
                                             </div>
@@ -100,6 +131,8 @@ const AddNewClient = ({isOpen, setIsOpen}) => {
                                                         name="client-email"
                                                         id="client-email"
                                                         className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                                                        value={formData.email}
+                                                        onChange={handleChange}
                                                     />
                                                 </div>
                                             </div>
@@ -116,6 +149,8 @@ const AddNewClient = ({isOpen, setIsOpen}) => {
                                                         name="client-number"
                                                         id="client-number"
                                                         className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                                                        value={formData.phonenumber}
+                                                        onChange={handleChange}
                                                     />
                                                 </div>
                                             </div>
@@ -132,6 +167,8 @@ const AddNewClient = ({isOpen, setIsOpen}) => {
                                                         name="client-alt-number"
                                                         id="client-alt-number"
                                                         className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                                                        value={formData.alternatenumber}
+                                                        onChange={handleChange}
                                                     />
                                                 </div>
                                             </div>
@@ -148,7 +185,8 @@ const AddNewClient = ({isOpen, setIsOpen}) => {
                                                     name="client-description"
                                                     rows={3}
                                                     className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                                                    defaultValue={''}
+                                                    value={formData.description}
+                                                    onChange={handleChange}
                                                     />
                                                 </div>
                                             </div>
