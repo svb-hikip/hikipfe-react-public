@@ -4,6 +4,7 @@ import { ChevronRightIcon } from '@heroicons/react/20/solid';
 import { fetchClients } from '../../apis/ClientAPIs';
 import { NavLink } from 'react-router-dom';
 import Loading from '../utils/Loading';
+import AddNewClient from './AddNewClient';
 
 export default function ClientListStack() {
   const [clientList, setClientList] = useState([]);
@@ -11,6 +12,7 @@ export default function ClientListStack() {
   const [page, setPage] = useState(1);
   const [hasMore, setHasMore] = useState(true);
   const [totalCount, setTotalCount] = useState(0);
+  const [isSideOverOpen, SetIsSideOverOpen] = useState(false);
 
   useEffect(() => {
     if (!isLoading) return;
@@ -55,7 +57,16 @@ export default function ClientListStack() {
           
         </h2>
         <p>--</p>
+        <div className='flex justify-between items-center mb-2'>
           <span>{totalCount} Clients</span>
+          <button 
+            className="inline-flex justify-end rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+            onClick={() => SetIsSideOverOpen(true)}
+          >
+            Add New Client
+          </button>
+        </div>
+          
           <InfiniteScroll
             loadMore={loadMoreClients}
             hasMore={hasMore}
@@ -86,6 +97,7 @@ export default function ClientListStack() {
           </InfiniteScroll>
         </>
       )}
+      <AddNewClient isOpen={isSideOverOpen} setIsOpen={SetIsSideOverOpen} />
     </>
   );
 }
