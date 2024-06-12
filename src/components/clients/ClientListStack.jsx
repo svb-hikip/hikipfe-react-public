@@ -109,10 +109,10 @@ export default function ClientListStack() {
                           </p>
                           <p className="mt-1 text-xs leading-5 text-gray-500">
                             {client.contact.contactemail_set.map(email => (
-                              <div key={email.email} className="flex items-center">
+                              <span key={email.email} className="flex items-center">
                                 <EnvelopeIcon className="h-4 w-4 mr-1 text-gray-400 inline-block" aria-hidden="true" />
                                 <span className="truncate hover:underline">{email.email} ({email.type})</span>
-                              </div>
+                              </span>
                             ))}
                           </p>
                         </div>
