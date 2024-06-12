@@ -1,3 +1,4 @@
+
 import { useState, useCallback, useEffect } from "react";
 import InfiniteScroll from "react-infinite-scroller";
 import { ChevronRightIcon } from "@heroicons/react/20/solid";
@@ -5,12 +6,15 @@ import { fetchClients } from "../../apis/ClientAPIs";
 import { NavLink } from "react-router-dom";
 import Loading from "../utils/Loading";
 
+
 export default function ClientListStack() {
   const [clientList, setClientList] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [page, setPage] = useState(1);
   const [hasMore, setHasMore] = useState(true);
   const [totalCount, setTotalCount] = useState(0);
+  const [filteredClients, setFilteredClients] = useState([]);
+  const [query, setQuery] = useState("");
 
   useEffect(() => {
     if (!isLoading) return;
@@ -32,22 +36,29 @@ export default function ClientListStack() {
     };
 
     fetchAndProcess();
+
   }, [isLoading, page, clientList]); // Dependency on isLoading ensures this effect runs after it changes.
+
 
   const loadMoreClients = useCallback(() => {
     if (isLoading) return;
     setIsLoading(true);
+
   }, [isLoading]); // Triggers the effect by changing isLoading.
+
 
   return (
     <>
       {isLoading && !totalCount ? (
         <>
+
           <span className="">Loading Clients ...</span>
+
           <Loading />
         </>
       ) : (
         <>
+
           <h2 className="text-danger">
             If you are not able to see clients list, you may have not logged in
             using the test credentials. Logout from current account using top
@@ -102,6 +113,7 @@ export default function ClientListStack() {
               ))}
             </ul>
           </InfiniteScroll>
+
         </>
       )}
     </>

@@ -1,18 +1,23 @@
+
 import { useLoaderData, NavLink } from "react-router-dom";
 import classNames from "../layout/dashboardComps/helper";
 import { Outlet } from "react-router-dom";
 
+
 function ClientDetails() {
   const data = useLoaderData();
   const tabs = [
+
     { name: "Appointments", to: "appointments" },
     { name: "Bills", to: "bills" },
     { name: "Notes", to: "notes" },
     { name: "Files", to: "files" },
+
   ];
 
   return (
     <>
+
       <div>
         <div className="px-4 sm:px-0">
           <h3 className="text-base font-semibold leading-7 text-gray-900">
@@ -51,11 +56,13 @@ function ClientDetails() {
                     <li key={index}>
                       {email.email} - Type: {email.type}, Permission to Contact:{" "}
                       {email.permission ? "Granted" : "Denied"}
+
                     </li>
                   ))}
                 </ul>
               </dd>
             </div>
+
             <div className="border-t border-gray-100 px-4 py-6 sm:col-span-1 sm:px-0">
               <dt className="text-sm font-medium leading-6 text-gray-900">
                 Phone Number
@@ -67,6 +74,7 @@ function ClientDetails() {
                       {item.phone_number} - Type: {item.type}, Voice:{" "}
                       {item.voice ? "Yes" : "No"}, Text:{" "}
                       {item.text ? "Yes" : "No"}
+
                     </li>
                   ))}
                 </ul>
@@ -75,6 +83,8 @@ function ClientDetails() {
           </dl>
         </div>
       </div>
+
+
       <div>
         <div className="sm:hidden">
           <label htmlFor="tabs" className="sr-only">
@@ -84,9 +94,11 @@ function ClientDetails() {
             id="tabs"
             name="tabs"
             className="block w-full rounded-md border-gray-300 focus:border-indigo-500 focus:ring-indigo-500"
+
             defaultValue={tabs.find((tab) =>
               window.location.pathname.includes(tab.to)
             )}
+
             onChange={(e) => {
               window.location.href = e.target.value; // This will trigger a route change in React Router
             }}
@@ -99,14 +111,17 @@ function ClientDetails() {
           </select>
         </div>
         <div className="hidden sm:block">
+
           <nav
             className="isolate flex divide-x divide-gray-200 rounded-lg shadow"
             aria-label="Tabs"
           >
+
             {tabs.map((tab, tabIdx) => (
               <NavLink
                 key={tab.name}
                 to={tab.to}
+
                 className={({ isActive }) =>
                   classNames(
                     isActive
@@ -117,6 +132,7 @@ function ClientDetails() {
                     "group relative min-w-0 flex-1 overflow-hidden bg-white py-4 px-4 text-center text-sm font-medium hover:bg-gray-50 focus:z-10"
                   )
                 }
+
               >
                 <span>{tab.name}</span>
               </NavLink>

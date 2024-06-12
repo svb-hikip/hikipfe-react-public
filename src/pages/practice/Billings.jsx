@@ -8,20 +8,17 @@ import Loading from '../../components/utils/Loading';
 export default function Billings() {
   const [bills, setBills] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+
 
   // Fetch bills from the API
   const fetchBills = async () => {
     try {
-      const attributes = await fetchUserAttributes();
-      const response = await fetchPracticeBills({
-        practiceId: attributes['custom:tenantId']
-      });
-      setBills(response.results);
+      setLoading(true);
+      const response = await fetchPracticeBills({params:{}});
+      setBills(response.data.results);
       setLoading(false);
     } catch (error) {
       console.error('Failed to fetch bills', error);
-      setError("Failed to fetch bills");
       setLoading(false);
     }
   };
@@ -66,7 +63,7 @@ export default function Billings() {
                             <div className="flex gap-x-6">
                               <div className="flex-auto">
                                 <div className="flex items-start gap-x-3">
-                                  <div className="text-sm font-medium leading-6 text-gray-900">$ {transaction.total_value}</div>
+                                  <div className="text-sm font-medium leading-6 text-gray-900">$ {transaction.aggregate_pre_tax_value}</div>
                                 </div>
                                 {transaction.aggregate_tax_value ? (
                                   <div className="mt-1 text-xs leading-5 text-gray-500">$ {transaction.aggregate_tax_value} tax</div>
@@ -78,7 +75,7 @@ export default function Billings() {
                           </td>
                           <td className="hidden py-5 pr-6 sm:table-cell">
                             <div className="text-sm leading-6 text-gray-900">
-                              {transaction.client.contact.legal_first_name} {transaction.client.contact.legal_last_name}
+                              {transaction.client_name}
                             </div>
                             <div className="mt-1 text-xs leading-5 text-gray-500">
                               {transaction.clinician} | {transaction.location}
@@ -94,7 +91,7 @@ export default function Billings() {
                             >
                               View<span className="hidden sm:inline"> transaction</span>
                                 <span className="sr-only">
-                                  , invoice #{transaction.number}, {transaction.client.billing_type}
+                                  , invoice #{transaction.number}, {transaction.billing_type}
                                 </span>
                             </Link>
                               

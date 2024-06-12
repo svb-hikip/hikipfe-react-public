@@ -5,10 +5,11 @@ import { EllipsisVerticalIcon } from '@heroicons/react/20/solid'
 import classNames from '../../layout/dashboardComps/helper';
 
 function ClientBills() {
-    const data = useLoaderData();
+    const response = useLoaderData();
+    console.log(response);
     return ( <>
     <ul role="list" className="divide-y divide-gray-100">
-      {data.map((invoice) => (
+      {response.data.results.map((invoice) => (
         <li key={invoice.uuid} className="flex justify-between gap-x-6 py-5">
           <div className="flex min-w-0 gap-x-4">
             

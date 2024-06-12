@@ -1,47 +1,45 @@
 import { BaseApi, handleApiError } from "./BaseAPI";
-const practiceEndpoint = '/practice/practices';
 const appointmentEndpoint = '/practice/appointments';
-const billsEndpoint = '/practice/bills';
+const billsEndpoint = '/practice/invoices';
 
 
-export const fetchPracticeAppointments = async ({ from, to, practiceId }) => {
+export const fetchPracticeAppointments = async ({params}) => {
     try {
-      const response = await BaseApi.get(`${practiceEndpoint}/${practiceId}/appointments/`, {
-        params: { from_date: from, to_date: to },
+      const response = await BaseApi.get(`${appointmentEndpoint}/${params.appointmentId? params.appointmentId : ""}`, {
+        params: { start_datetime_after: params.from, start_datetime_before: params.to,
+          client:params.clientId
+         },
       });
-      return response.data;
+      return response;
     } catch (error) {
       handleApiError(error);
       throw new Error('Failed to fetch appointments');
     }
   };
 
-  export const fetchPracticeBills = async ({practiceId }) => {
+
+  export const deletePracticeAppointments = async (uuid) => {
     try {
-      const response = await BaseApi.get(`${practiceEndpoint}/${practiceId}/bills/`);
-      return response.data;
+      const response = await BaseApi.delete(`${appointmentEndpoint}/${uuid}`);
+      return response;
     } catch (error) {
       handleApiError(error);
-      throw new Error('Failed to fetch appointments');
+      throw new Error('Failed to delete appointments');
     }
   };
 
-  export const fetchAppointmentDetail = async ({ params }) => {
+  
+  export const fetchPracticeBills = async ({params}) => {
     try {
-      const response = await BaseApi.get(`${appointmentEndpoint}/${params.appointmentId}/`);
-      return response.data;
-    } catch (error) {
-      handleApiError(error);
-      throw new Error('Failed to fetch appointments');
-    }
-  };
+      const response = await BaseApi.get(`${billsEndpoint}/${params.invoiceId? params.invoiceId : ""}`, {
+        params: { client: params.clientId, appointment: params.appointmentId,
+         },
+      });
+      console.log(response, "ss");
+      return response;
 
-  export const fetchBillingDetail = async ({ params }) => {
-    try {
-      const response = await BaseApi.get(`${billsEndpoint}/${params.invoiceId}/`);
-      return response.data;
     } catch (error) {
       handleApiError(error);
-      throw new Error('Failed to fetch appointments');
+      throw new Error('Failed to fetch invoices');
     }
   };

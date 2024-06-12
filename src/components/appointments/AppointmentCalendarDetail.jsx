@@ -13,12 +13,12 @@ const AppointmentDetail = ({isOpen, onClose, appointment}) => {
           </button> */}
         </div>
         <div className="mt-2">
-          <p><strong>Clinician:</strong> {appointment.extendedProps.clinician_name}</p>
-          <p><strong>Client:</strong> {appointment.title}</p>
-          <p><strong>Location:</strong> {appointment.extendedProps.location_name}</p>
-          <p><strong>Services:</strong> {appointment.extendedProps.services_names.join(', ')}</p>
-          <p><strong>Items:</strong> {appointment.extendedProps.items_names.join(', ')}</p>
-          <p><strong>Duration:</strong> {appointment.extendedProps.duration}</p>
+          <p><strong>Clinician:</strong> {appointment.clinician_name}</p>
+          <p><strong>Client:</strong> {appointment.client_name}</p>
+          <p><strong>Location:</strong> {appointment.location_name}</p>
+          <p><strong>Services:</strong> {appointment.services_names.join(', ')}</p>
+          <p><strong>Items:</strong> {appointment.items_names.join(', ')}</p>
+          <p><strong>Duration:</strong> {appointment.duration}</p>
         </div>
         <div className="flex justify-end mt-4">
           <button

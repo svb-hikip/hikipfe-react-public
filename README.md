@@ -1,3 +1,8 @@
+# API ENDPOINTS AND DOCS
+https://hikip-django-e06ccc5f06d1.herokuapp.com/api/schema/swagger-ui/
+
+https://hikip-django-e06ccc5f06d1.herokuapp.com/api/schema/redoc/
+
 # HIKIP React App
 
 HIKIP is an online web application designed to assist healthcare professionals such as psychotherapists, acupuncturists, and physiotherapists in managing their clients, appointments, and patient notes. The application also includes a client video call feature and a client portal where clients can log in to complete the onboarding process.
@@ -44,5 +49,7 @@ There are 2 openings for Front end Developer (Fully Remote & In-office). Out of 
 
 
 Thank you for your Contributions!
-anthonym995 - Anthony M
-Kiruba2602 - Kirubakaran
+- anthonym995 - Anthony M
+- Kiruba2602 - Kirubakaran
+- aditya28n99 - Aditya Wakale
+ 
