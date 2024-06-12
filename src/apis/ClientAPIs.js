@@ -5,9 +5,10 @@ const progressNotesEndpoint = '/client/progress-notes'
 const clinicianNotesEndpoint = '/client/clinician-notes'
 const dntNotesEndpoint = '/client/diagnosis-treatment-plans'
 
-export const fetchClients = async (page=1) => {
+export const fetchClients = async ({params}) => {
+  console.log(params);
     try {
-        const response = await BaseApi.get(`${clientsEndpoint}?page=${page}`);
+        const response = await BaseApi.get(`${clientsEndpoint}`, {params:params});
         return {
             data: response.data.results, // array of clients
             totalCount: response.data.count, // total number of clients
