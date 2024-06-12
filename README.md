@@ -49,5 +49,7 @@ There are 2 openings for Front end Developer (Fully Remote & In-office). Out of 
 
 
 Thank you for your Contributions!
-anthonym995 - Anthony M
-Kiruba2602 - Kirubakaran
+- anthonym995 - Anthony M
+- Kiruba2602 - Kirubakaran
+- aditya28n99 - Aditya Wakale
+ 
