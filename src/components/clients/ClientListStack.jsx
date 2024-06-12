@@ -6,6 +6,7 @@ import { NavLink } from 'react-router-dom';
 import Loading from '../utils/Loading';
 import SearchInput from "../utils/SearchInput";
 import NoResultFound from "../utils/NoResultFound";
+import AddNewClient from './AddNewClient';
 
 export default function ClientListStack() {
   const [clientList, setClientList] = useState([]);
@@ -15,6 +16,7 @@ export default function ClientListStack() {
   const [totalCount, setTotalCount] = useState(0);
   const [filteredClients, setFilteredClients] = useState([]);
   const [query, setQuery] = useState("");
+  const [isSideOverOpen, SetIsSideOverOpen] = useState(false);
 
   useEffect(() => {
     if (!isLoading) return;
@@ -63,15 +65,24 @@ export default function ClientListStack() {
           <span className='text-gray-500'>Loading Clients ...</span>
           <Loading />
         </>
-      ) : (
+        ) : (
         <>
           <h2 className='text-red-600'>
             If you are not able to see clients list, you may have not logged in using the test credentials. Logout from current account using top right corner click "Tim Cook".
             Login using ID:svb@hikip.com PW:PaWv2b5Fy@n6BSi to see test data. Please do not remove this message in your commits.
           </h2>
           <p>--</p>
-          <div className="flex justify-end items-center h-auto py-4">
-            <SearchInput query={query} setQuery={setQuery} placeholder={"Search Clients..."} />
+          <div className='flex justify-end'>
+            <button 
+              className="inline-flex justify-around rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+              onClick={() => SetIsSideOverOpen(true)}
+            >
+              Add New Client
+            </button>
+          </div>
+          <div className="flex justify-start items-center h-auto py-4">
+            <SearchInput className="" query={query} setQuery={setQuery} placeholder={"Search Clients..."} />
+            
           </div>
           <span className="block text-sm font-medium text-gray-700">{totalCount} Clients</span>
           {filteredClients.length === 0 ? (
@@ -139,9 +150,9 @@ export default function ClientListStack() {
                 </ul>
               </InfiniteScroll>
             </>
-          )}
-        </>
-      )}
+          )}  
+      <AddNewClient isOpen={isSideOverOpen} setIsOpen={SetIsSideOverOpen} />
     </>
-  );
-}
+    )}
+  </>
+)};

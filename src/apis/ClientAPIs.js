@@ -67,3 +67,13 @@ export const fetchProgressNotes = async ({params}) => {
       throw new Error('Failed to fetch invoices');
     }
   };
+
+  export const addNewClient = (clientData) => {
+    try {
+      const response = BaseApi.post(`${clientsEndpoint}`,clientData);
+      return response.data;
+    } catch (error) {
+      handleApiError(error);
+      throw new Error('Failed to add client');
+    }
+  };
