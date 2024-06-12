@@ -18,9 +18,10 @@ function ClientDetails() {
           <h3 className="text-xl font-semibold leading-7 text-gray-900">Client Information</h3>
           <p className="mt-1 max-w-2xl text-sm leading-6 text-gray-500">Personal details and Appointments</p>
         </div>
+        <dl className="grid grid-cols-1 sm:grid-cols-2 gap-3">
         <div className="mt-6">
-          <dl className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-            <div className="border-t border-gray-200 px-4 py-6 sm:px-0 hover:bg-gray-50 rounded-lg">
+          <dl className="grid grid-cols-1 sm:grid-cols-1 gap-3">
+            <div className="border-t border-gray-200 px-4 py-3 sm:px-0 hover:bg-gray-50 rounded-lg">
               <dt className="text-sm font-medium leading-6 text-gray-900">Full name</dt>
               <dd className="mt-1 text-sm leading-6 text-gray-700 sm:mt-2">
                 <span className="font-semibold">{data.contact.legal_first_name} {data.contact.legal_last_name}</span>
@@ -28,13 +29,7 @@ function ClientDetails() {
                 <span className="ml-2 inline-block bg-green-100 text-green-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded">{data.billing_type}</span>
               </dd>
             </div>
-            <div className="border-t border-gray-200 px-4 py-6 sm:px-0 hover:bg-gray-50 rounded-lg">
-              <dt className="text-sm font-medium leading-6 text-gray-900">Relationship</dt>
-              <dd className="mt-1 text-sm leading-6 text-gray-700 sm:mt-2">
-                {data.contact.relationship}
-              </dd>
-            </div>
-            <div className="border-t border-gray-200 px-4 py-6 sm:px-0 hover:bg-gray-50 rounded-lg">
+            <div className="border-t border-gray-200 px-4 py-3 sm:px-0 hover:bg-gray-50 rounded-lg">
               <dt className="text-sm font-medium leading-6 text-gray-900">Client Portal Access</dt>
               <dd className="mt-1 text-sm leading-6 text-gray-700 sm:mt-2">
                 <span className={`inline-block px-2 py-0.5 text-xs font-medium rounded ${data.contact.client_portal_access ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}`}>
@@ -42,7 +37,7 @@ function ClientDetails() {
                 </span>
               </dd>
             </div>
-            <div className="border-t border-gray-200 px-4 py-6 sm:px-0 hover:bg-gray-50 rounded-lg">
+            <div className="border-t border-gray-200 px-4 py-3 sm:px-0 hover:bg-gray-50 rounded-lg">
               <dt className="text-sm font-medium leading-6 text-gray-900">Email address</dt>
               <dd className="mt-1 text-sm leading-6 text-gray-700 sm:mt-2">
                 <ul>
@@ -59,7 +54,7 @@ function ClientDetails() {
                 </ul>
               </dd>
             </div>
-            <div className="border-t border-gray-200 px-4 py-6 sm:px-0 hover:bg-gray-50 rounded-lg">
+            <div className="border-t border-gray-200 px-4 py-3 sm:px-0 hover:bg-gray-50 rounded-lg">
               <dt className="text-sm font-medium leading-6 text-gray-900">Phone Number</dt>
               <dd className="mt-1 text-sm leading-6 text-gray-700 sm:mt-2">
                 <ul>
@@ -82,6 +77,80 @@ function ClientDetails() {
             </div>
           </dl>
         </div>
+        <div className="mt-6">
+        <div className="border-t border-gray-200 px-4 py-3 sm:px-0 hover:bg-gray-50 rounded-lg">
+              <dt className="text-sm font-medium leading-6 text-gray-900">Adam Sandler | Relation:Son</dt>
+              <dd className="mt-1 text-sm leading-6 text-gray-700 sm:mt-2">
+                <ul>
+                  {data.contact.contactphone_set.map((item, index) => (
+                    <li key={index} className="flex items-center mb-1">
+                      <PhoneIcon className="h-5 w-5 text-gray-500 mr-2" />
+                      {item.phone_number} -
+                      <span className="ml-1 inline-block bg-blue-100 text-blue-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded">{item.type}</span>
+                      {/* Adding the voice and text as : check what all data the API is fetching and Add more client data to the details page */}
+                      <span className={`inline-block px-2 py-0.5 text-xs font-medium rounded ${item.voice ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}`}>
+                        Voice: {item.voice ? 'Yes' : 'No'}
+                      </span>
+                      <span className={`ml-1 inline-block px-2 py-0.5 text-xs font-medium rounded ${item.text ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}`}>
+                        Text: {item.text ? 'Yes' : 'No'}
+                      </span>
+                    </li>
+                  ))}
+                </ul>
+              <dd className="mt-1 text-sm leading-6 text-gray-700 sm:mt-2">
+                <ul>
+                  {data.contact.contactemail_set.map((email, index) => (
+                    <li key={index} className="flex items-center mb-1">
+                      <EnvelopeIcon className="h-5 w-5 text-gray-500 mr-2" />
+                      {email.email} -
+                      <span className="ml-1 inline-block bg-blue-100 text-blue-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded">{email.type}</span>
+                      <span className={`inline-block px-2 py-0.5 text-xs font-medium rounded ${email.permission ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}`}>
+                        {email.permission ? 'Granted' : 'Denied'}
+                      </span>
+                    </li>
+                  ))}
+                </ul>
+              </dd>
+              </dd>
+        </div>
+        <div className="border-t border-gray-200 px-4 py-3 sm:px-0 hover:bg-gray-50 rounded-lg">
+              <dt className="text-sm font-medium leading-6 text-gray-900">Sunny Leon | Relation:Daughter</dt>
+              <dd className="mt-1 text-sm leading-6 text-gray-700 sm:mt-2">
+                <ul>
+                  {data.contact.contactphone_set.map((item, index) => (
+                    <li key={index} className="flex items-center mb-1">
+                      <PhoneIcon className="h-5 w-5 text-gray-500 mr-2" />
+                      {item.phone_number} -
+                      <span className="ml-1 inline-block bg-blue-100 text-blue-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded">{item.type}</span>
+                      {/* Adding the voice and text as : check what all data the API is fetching and Add more client data to the details page */}
+                      <span className={`inline-block px-2 py-0.5 text-xs font-medium rounded ${item.voice ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}`}>
+                        Voice: {item.voice ? 'Yes' : 'No'}
+                      </span>
+                      <span className={`ml-1 inline-block px-2 py-0.5 text-xs font-medium rounded ${item.text ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}`}>
+                        Text: {item.text ? 'Yes' : 'No'}
+                      </span>
+                    </li>
+                  ))}
+                </ul>
+              <dd className="mt-1 text-sm leading-6 text-gray-700 sm:mt-2">
+                <ul>
+                  {data.contact.contactemail_set.map((email, index) => (
+                    <li key={index} className="flex items-center mb-1">
+                      <EnvelopeIcon className="h-5 w-5 text-gray-500 mr-2" />
+                      {email.email} -
+                      <span className="ml-1 inline-block bg-blue-100 text-blue-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded">{email.type}</span>
+                      <span className={`inline-block px-2 py-0.5 text-xs font-medium rounded ${email.permission ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}`}>
+                        {email.permission ? 'Granted' : 'Denied'}
+                      </span>
+                    </li>
+                  ))}
+                </ul>
+              </dd>
+              </dd>
+        </div>
+        <a href='#'>+ Contact Button</a>
+        </div>
+        </dl>
       </div>
 
       <div>
