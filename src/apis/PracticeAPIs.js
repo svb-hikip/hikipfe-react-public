@@ -17,6 +17,15 @@ export const fetchPracticeAppointments = async ({params}) => {
     }
   };
 
+  export const addPracticeAppointments = async (appointmentData) => {
+    try {
+      const response = await BaseApi.post(`${appointmentEndpoint}`, appointmentData);
+      return response;
+    } catch (error) {
+      handleApiError(error);
+      throw new Error('Failed to add new appointment');
+    }
+  }
 
   export const deletePracticeAppointments = async (uuid) => {
     try {

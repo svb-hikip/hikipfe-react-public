@@ -4,8 +4,9 @@ import dayGridPlugin from '@fullcalendar/daygrid';
 import timeGridPlugin from '@fullcalendar/timegrid';
 import interactionPlugin from '@fullcalendar/interaction';
 import { useNavigate } from 'react-router-dom';
+import { addPracticeAppointments } from '../../apis/PracticeAPIs';
 
-const AddAppointmentForm = ({onSubmit}) => {
+const AddAppointmentForm = () => {
     const [clientName, setClientsName] = useState('');
     const [clinicianName, setClinicianName] = useState('');
     const [location, setLocation] = useState('');
@@ -24,22 +25,28 @@ const AddAppointmentForm = ({onSubmit}) => {
         setAllDay(allDay);
     };
 
-    const handleSubmit = (e) => {
+    const appointmentData = {
+              clinician_name: clinicianName,
+              client_name: clientName,
+              location_name: location,
+              services_name: services.split(',').map(service => service.trim()),
+              items_name: items.split(',').map(item => item.trim()),
+              duration,
+              start_time: startTime ? startTime.toISOString() : '',
+              all_day: allDay,
+          };
+
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        onSubmit({
-            clinician_name: clinicianName,
-            client_name: clientName,
-            location_name: location,
-            services_name: services.split(',').map(service => service.trim()),
-            items_name: items.split(',').map(item => item.trim()),
-            duration,
-            start_time: startTime ? startTime.toISOString() : '',
-            all_day: allDay,
-        });
-        navigate('/dashboard/clients')
+        try {
+          await addPracticeAppointments(appointmentData);
+          navigate('/dashboard/clients');
+        } catch (error) {
+          console.error(error.message);
+        }
     }
   return (
-    <form onSubmit={handleSubmit} className='space-y-6'>
+    <form onSubmit={handleSubmit} className='space-y-4'>
         <div>
             <label htmlFor='client-name' className='block text-sm font-medium text-gray-700'>Client Name</label>
             <input type='text' id='client-name' value={clientName} 
