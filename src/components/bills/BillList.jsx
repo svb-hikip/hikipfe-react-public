@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import classNames from '../../components/layout/dashboardComps/helper';
 import Loading from '../../components/utils/Loading';
 import PropTypes from 'prop-types';
-
+import NoResultsFound from '../../components/utils/NoResultFound'
 
 export default function Billings({ params }) {
   const [bills, setBills] = useState([]);
@@ -37,8 +37,12 @@ export default function Billings({ params }) {
         </>
       ) : (
         <>
-          {/* Debugging purpose: Display raw bills data */}
-          <div>
+          {bills.length === 0 ? (
+            <NoResultsFound
+              title="No Bills Found"
+              message="Sorry, we could not find any bills for this client."
+            />
+          ) : (
             <div className="mt-6 overflow-hidden border-t border-gray-100">
               <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
                 <div className="mx-auto max-w-2xl lg:mx-0 lg:max-w-none">
@@ -102,12 +106,13 @@ export default function Billings({ params }) {
                 </div>
               </div>
             </div>
-          </div>
+          )}
         </>
       )}
     </>
   );
 }
+
 Billings.propTypes = {
-    params: PropTypes.object.isRequired,
-  };
+  params: PropTypes.object.isRequired,
+};

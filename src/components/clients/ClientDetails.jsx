@@ -97,6 +97,7 @@ function ClientDetails() {
                     </li>
                   ))}
                 </ul>
+                </dd>
               <dd className="mt-1 text-sm leading-6 text-gray-700 sm:mt-2">
                 <ul>
                   {data.contact.contactemail_set.map((email, index) => (
@@ -111,7 +112,7 @@ function ClientDetails() {
                   ))}
                 </ul>
               </dd>
-              </dd>
+
         </div>
         <div className="border-t border-gray-200 px-4 py-3 sm:px-0 hover:bg-gray-50 rounded-lg">
               <dt className="text-sm font-medium leading-6 text-gray-900">Sunny Leon | Relation:Daughter</dt>
@@ -132,6 +133,7 @@ function ClientDetails() {
                     </li>
                   ))}
                 </ul>
+                </dd>
               <dd className="mt-1 text-sm leading-6 text-gray-700 sm:mt-2">
                 <ul>
                   {data.contact.contactemail_set.map((email, index) => (
@@ -145,7 +147,6 @@ function ClientDetails() {
                     </li>
                   ))}
                 </ul>
-              </dd>
               </dd>
         </div>
         <a href='#'>+ Contact Button</a>
