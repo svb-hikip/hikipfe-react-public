@@ -45,7 +45,8 @@ const CalendarComponent = () => {
   };
 
   const handleEventClick = (info) => {
-    setSelectedAppointment(info.event);
+    console.log("Event trigged: ", info.event.extendedProps);
+    setSelectedAppointment(info.event.extendedProps);
     SetIsAppointmentDetailOpen(true);
   }
 

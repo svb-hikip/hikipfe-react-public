@@ -11,7 +11,7 @@ const AppointmentDetail = ({isOpen, onClose, appointment}) => {
         </div>
         <div className="mt-2">
           <p><strong>Clinician:</strong> {appointment.clinician_name}</p>
-          <p><strong>Client:</strong> {appointment.client_name}</p>
+          <p><strong>Client:</strong> {appointment.clinician_name}</p>
           <p><strong>Location:</strong> {appointment.location_name}</p>
           <p><strong>Services:</strong> {appointment.services_names ? appointment.services_names.join(', '): 'N/A'}</p>
           <p><strong>Items:</strong> {appointment.items_names ? appointment.items_names.join(', ') : 'N/A'}</p>
