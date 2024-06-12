@@ -1,4 +1,4 @@
-import { useState, useCallback, useEffect } from 'react';
+import { useState, useCallback, useEffect, useRef } from 'react';
 import InfiniteScroll from 'react-infinite-scroller';
 import { ChevronRightIcon, EnvelopeIcon, PhoneIcon } from '@heroicons/react/20/solid';
 import { fetchClients } from '../../apis/ClientAPIs';
@@ -13,60 +13,42 @@ export default function ClientListStack() {
   const [isLoading, setIsLoading] = useState(false);
   const [page, setPage] = useState(1);
   const [hasMore, setHasMore] = useState(true);
-  const [totalCount, setTotalCount] = useState(0);
-  const [filteredClients, setFilteredClients] = useState([]);
+  const [totalCount, setTotalCount] = useState(null);
   const [query, setQuery] = useState("");
   const [isSideOverOpen, SetIsSideOverOpen] = useState(false);
+  const isFirstRender = useRef(true);
 
-  useEffect(() => {
-    if (!isLoading) return;
-
-    const fetchAndProcess = async () => {
-      setHasMore(false);
-      try {
-        const result = await fetchClients(page, 20);
-        setPage(prevPage => prevPage + 1);
-        setClientList(prevClients => [...prevClients, ...result.data]);
-        setHasMore(!!result.nextPage);
-        setTotalCount(result.totalCount);
-      } catch (error) {
-        console.error('Failed to load more clients:', error);
-      } finally {
-        setIsLoading(false);
+  const loadMoreItems = async () => {
+    if(!hasMore || isLoading) return;
+    setIsLoading(true)
+    try {
+      const result = await fetchClients({params:{'page':page, 'name':query}});
+      const newItems = result.data;
+      setClientList((prevItems) => [...prevItems, ...newItems]);
+      setTotalCount(result.totalCount)
+      if (!result.nextPage) {
+        setHasMore(false);
       }
-    };
-
-    fetchAndProcess();
-  }, [isLoading, page]);
-
-  const loadMoreClients = useCallback(() => {
-    if (isLoading) return;
-    setIsLoading(true);
-  }, [isLoading]);
+    } catch (error) {
+      console.error('Error fetching items:', error);
+    } finally {
+      setIsLoading(false)
+      setPage((prevValue) => prevValue+1)
+    }
+  };
 
   useEffect(() => {
-    // Trigger the initial load on component mount
-    loadMoreClients();
-  }, []); // Empty dependency array ensures this runs only once
-
-  useEffect(() => {
-    const filtered = clientList.filter((client) =>
-      `${client.contact.legal_first_name} ${client.contact.legal_last_name}`
-        .toLowerCase()
-        .includes(query.toLowerCase())
-    );
-    setFilteredClients(filtered);
-  }, [query, clientList]);
+    if (isFirstRender.current) {
+      isFirstRender.current = false;
+    } else {
+      setClientList([]);
+      setPage(1);
+      setHasMore(true);
+    }
+  }, [query]);
 
   return (
     <>
-      {isLoading && !totalCount ? (
-        <>
-          <span className='text-gray-500'>Loading Clients ...</span>
-          <Loading />
-        </>
-        ) : (
-        <>
           <h2 className='text-red-600'>
             If you are not able to see clients list, you may have not logged in using the test credentials. Logout from current account using top right corner click "Tim Cook".
             Login using ID:svb@hikip.com PW:PaWv2b5Fy@n6BSi to see test data. Please do not remove this message in your commits.
@@ -85,19 +67,24 @@ export default function ClientListStack() {
             
           </div>
           <span className="block text-sm font-medium text-gray-700">{totalCount} Clients</span>
-          {filteredClients.length === 0 ? (
-            <>
-              <NoResultFound />
-            </> 
-          ) : (
+      {isLoading && !totalCount ? (
+        <>
+          <span className='text-gray-500'>Loading Clients ...</span>
+          <Loading />
+        </>
+        ) : totalCount === 0 ? (
+          <NoResultFound title={'You have No clients'} message={'Add a new client to begin'} />
+        ) : (
+        <>
             <>
               <InfiniteScroll
-                loadMore={loadMoreClients}
-                hasMore={hasMore}
-                loader={<div className="loader" key={0}>Loading ...</div>}
+                 pageStart={0}
+                 loadMore={loadMoreItems}
+                 hasMore={hasMore}
+                 loader={<div className="loader" key={0}>Loading...</div>}
               >
                 <ul role="list" className="divide-y divide-gray-200 overflow-hidden bg-white">
-                  {(query ? filteredClients : clientList).map(client => (
+                  {clientList.map(client => (
                     <li key={client.uuid} className="relative flex flex-col sm:flex-row justify-between gap-y-4 gap-x-6 px-4 py-5 hover:bg-gray-50 sm:px-6">
                       <div className="flex min-w-0 gap-x-4 pr-6 sm:w-1/3 sm:flex-none">
                         <div className="min-w-0 flex-auto">
@@ -148,11 +135,13 @@ export default function ClientListStack() {
                     </li>
                   ))}
                 </ul>
+               
               </InfiniteScroll>
+
             </>
-          )}  
+
       <AddNewClient isOpen={isSideOverOpen} setIsOpen={SetIsSideOverOpen} />
     </>
     )}
   </>
-)};
+)}
