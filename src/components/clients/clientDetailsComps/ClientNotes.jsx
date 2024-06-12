@@ -22,7 +22,6 @@ export default function ClientNotes() {
 
   return (
     <>
-    {JSON.stringify(data)}
     <fieldset>
       <RadioGroup
         value={selectedNotesList}
