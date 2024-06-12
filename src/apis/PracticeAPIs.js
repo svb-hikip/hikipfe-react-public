@@ -17,6 +17,17 @@ export const fetchPracticeAppointments = async ({params}) => {
     }
   };
 
+
+  export const deletePracticeAppointments = async (uuid) => {
+    try {
+      const response = await BaseApi.delete(`${appointmentEndpoint}/${uuid}`);
+      return response;
+    } catch (error) {
+      handleApiError(error);
+      throw new Error('Failed to delete appointments');
+    }
+  };
+
   
   export const fetchPracticeBills = async ({params}) => {
     try {

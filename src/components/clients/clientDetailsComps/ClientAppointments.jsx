@@ -1,14 +1,24 @@
+import { useState } from 'react';
 import { useLoaderData } from 'react-router-dom';
-import { Menu, MenuButton, MenuItem, MenuItems, Transition } from '@headlessui/react'
+import { Menu, MenuButton, MenuItem, MenuItems, Transition, Button } from '@headlessui/react'
 import { EllipsisVerticalIcon } from '@heroicons/react/20/solid'
 import classNames from '../../layout/dashboardComps/helper';
 import { Link } from 'react-router-dom';
+import { deletePracticeAppointments } from '../../../apis/PracticeAPIs';
 
 function ClientAppointments() {
     const response = useLoaderData();
+
+    const [data, setData] = useState(response.data);
+
+    const handleDelete = (uuid) => {
+      deletePracticeAppointments(uuid);
+      setData(data.filter((item) => item.uuid !== uuid));
+    };
+
     return ( <>
     <ul role="list" className="divide-y divide-gray-100">
-      {response.data.map((appointment) => (
+      {data.map((appointment) => (
         <li key={appointment.uuid} className="flex justify-between gap-x-6 py-5">
           <div className="flex min-w-0 gap-x-4">
             <div className="min-w-0 flex-auto">
@@ -71,15 +81,15 @@ function ClientAppointments() {
                   </MenuItem>
                   <MenuItem>
                     {({ focus }) => (
-                      <a
-                        href="#"
+                      <Button
                         className={classNames(
                           focus ? 'bg-red-50' : '',
-                          'block px-3 py-1 text-sm leading-6 text-gray-900'
+                          'block px-3 py-1 text-sm leading-6 text-gray-900 w-full text-left'
                         )}
+                        onClick={() => handleDelete(appointment.uuid)}
                       >
                         Delete<span className="sr-only">, {appointment.clinician_name}</span>
-                      </a>
+                      </Button>
                     )}
                   </MenuItem>
                 </MenuItems>
