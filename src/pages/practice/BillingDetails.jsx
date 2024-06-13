@@ -80,6 +80,20 @@ export default function BillingDetail() {
     aggregate_payment_value,
   } } = useLoaderData();
 
+  const invoice = {
+    subTotal: `$${Number(aggregate_pre_tax_value || 0).toFixed(2)}`,
+    tax: `$${Number(aggregate_tax_value || 0).toFixed(2)}`,
+    total: `$${(Number(aggregate_pre_tax_value || 0) + Number(aggregate_tax_value || 0)).toFixed(2)}`,
+    items: line_items.map((item, index) => ({
+      id: index + 1,
+      title: item.item ? item.item.item : 'Unknown Service',
+      description: item.item ? item.item.description : item.service.description,
+      hours: item.quantity || '0',
+      rate: `$${(item.item && item.quantity ? Number(item.item.fee) / Number(item.quantity) : 0).toFixed(2)}`,
+      price: `$${Number(item.pre_tax_value || 0).toFixed(2)}`,
+    }))
+  };
+
   const [selected, setSelected] = useState(moods[5])
   return (
     <div>
@@ -174,6 +188,7 @@ export default function BillingDetail() {
             </div>
           </div>
         </header>
+
     </div>
   )
 }
