@@ -31,45 +31,6 @@ import {
 import { BellIcon, XMarkIcon as XMarkIconOutline } from '@heroicons/react/24/outline'
 import { CheckCircleIcon } from '@heroicons/react/24/solid'
 
-const invoice = {
-  subTotal: '$8,800.00',
-  tax: '$1,760.00',
-  total: '$10,560.00',
-  items: [
-    {
-      id: 1,
-      title: 'Logo redesign',
-      description: 'New logo and digital asset playbook.',
-      hours: '20.0',
-      rate: '$100.00',
-      price: '$2,000.00',
-    },
-    {
-      id: 2,
-      title: 'Website redesign',
-      description: 'Design and program new company website.',
-      hours: '52.0',
-      rate: '$100.00',
-      price: '$5,200.00',
-    },
-    {
-      id: 3,
-      title: 'Business cards',
-      description: 'Design and production of 3.5" x 2.0" business cards.',
-      hours: '12.0',
-      rate: '$100.00',
-      price: '$1,200.00',
-    },
-    {
-      id: 4,
-      title: 'T-shirt design',
-      description: 'Three t-shirt design concepts.',
-      hours: '4.0',
-      rate: '$100.00',
-      price: '$400.00',
-    },
-  ],
-}
 const activity = [
   { id: 1, type: 'created', person: { name: 'Chelsea Hagon' }, date: '7d ago', dateTime: '2023-01-23T10:32' },
   { id: 2, type: 'edited', person: { name: 'Chelsea Hagon' }, date: '6d ago', dateTime: '2023-01-23T11:03' },
@@ -104,11 +65,58 @@ function classNames(...classes) {
 }
 
 export default function BillingDetail() {
-  const data = useLoaderData();
+  const { data: {
+    uuid,
+    number,
+    date,
+    client: {
+      client_type,
+      billing_type,
+      contact: {
+        contactphone_set,
+        contactemail_set,
+        legal_first_name,
+        legal_last_name,
+        relationship,
+        client_portal_access,
+      }
+    },
+    appointment: {
+      client_name,
+      billing_type: appointment_billing_type,
+      client_type: appointment_client_type,
+      all_day,
+      start_datetime,
+      duration,
+      clinician_name,
+      location_name,
+      services_name,
+      items_name,
+    },
+    line_items,
+    payments,
+    aggregate_pre_tax_value,
+    aggregate_tax_value,
+    aggregate_payment_value,
+  } } = useLoaderData();
+
+  const invoice = {
+    subTotal: `$${Number(aggregate_pre_tax_value || 0).toFixed(2)}`,
+    tax: `$${Number(aggregate_tax_value || 0).toFixed(2)}`,
+    total: `$${(Number(aggregate_pre_tax_value || 0) + Number(aggregate_tax_value || 0)).toFixed(2)}`,
+    items: line_items.map((item, index) => ({
+      id: index + 1,
+      title: item.item ? item.item.item : 'Unknown Service',
+      description: item.item ? item.item.description : item.service.description,
+      hours: item.quantity || '0',
+      rate: `$${(item.item && item.quantity ? Number(item.item.fee) / Number(item.quantity) : 0).toFixed(2)}`,
+      price: `$${Number(item.pre_tax_value || 0).toFixed(2)}`,
+    }))
+  };
+
   const [selected, setSelected] = useState(moods[5])
   return (
     <div>
-          {JSON.stringify(data)}
       <main>
         <header className="relative isolate pt-16">
           <div className="absolute inset-0 -z-10 overflow-hidden" aria-hidden="true">
@@ -250,21 +258,25 @@ export default function BillingDetail() {
                 </div>
               </div>
             </div>
-
-            {/* Invoice */}
+            {/* Invoice feild start from here..*/}
             <div className="-mx-4 px-4 py-8 shadow-sm ring-1 ring-gray-900/5 sm:mx-0 sm:rounded-lg sm:px-8 sm:pb-14 lg:col-span-2 lg:row-span-2 lg:row-end-2 xl:px-16 xl:pb-20 xl:pt-16">
               <h2 className="text-base font-semibold leading-6 text-gray-900">Invoice</h2>
               <dl className="mt-6 grid grid-cols-1 text-sm leading-6 sm:grid-cols-2">
                 <div className="sm:pr-4">
                   <dt className="inline text-gray-500">Issued on</dt>{' '}
                   <dd className="inline text-gray-700">
-                    <time dateTime="2023-23-01">January 23, 2023</time>
+                    <time dateTime={date}>
+                      {new Date(date).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}
+                    </time>
                   </dd>
                 </div>
                 <div className="mt-2 sm:mt-0 sm:pl-4">
                   <dt className="inline text-gray-500">Due on</dt>{' '}
                   <dd className="inline text-gray-700">
-                    <time dateTime="2023-31-01">January 31, 2023</time>
+                    {/* Calculated the due date field based on issued date */}
+                    <time dateTime={date}>
+                      {new Date(new Date(date).getTime() + 7 * 24 * 60 * 60 * 1000).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}
+                    </time>
                   </dd>
                 </div>
                 <div className="mt-6 border-t border-gray-900/5 pt-6 sm:pr-4">
@@ -280,7 +292,7 @@ export default function BillingDetail() {
                 <div className="mt-8 sm:mt-6 sm:border-t sm:border-gray-900/5 sm:pl-4 sm:pt-6">
                   <dt className="font-semibold text-gray-900">To</dt>
                   <dd className="mt-2 text-gray-500">
-                    <span className="font-medium text-gray-900">Tuple, Inc</span>
+                    <span className="font-medium text-gray-900">{legal_first_name} {legal_last_name}</span>
                     <br />
                     886 Walter Street
                     <br />
@@ -301,7 +313,7 @@ export default function BillingDetail() {
                       Projects
                     </th>
                     <th scope="col" className="hidden py-3 pl-8 pr-0 text-right font-semibold sm:table-cell">
-                      Hours
+                      Quantity
                     </th>
                     <th scope="col" className="hidden py-3 pl-8 pr-0 text-right font-semibold sm:table-cell">
                       Rate
@@ -315,9 +327,10 @@ export default function BillingDetail() {
                   {invoice.items.map((item) => (
                     <tr key={item.id} className="border-b border-gray-100">
                       <td className="max-w-0 px-0 py-5 align-top">
-                        <div className="truncate font-medium text-gray-900">{item.title}</div>
-                        <div className="truncate text-gray-500">{item.description}</div>
+                        <div className="font-medium text-gray-900">{item.title}</div>
+                        <div className="text-gray-500 whitespace-normal break-words">{item.description}</div>
                       </td>
+
                       <td className="hidden py-5 pl-8 pr-0 text-right align-top tabular-nums text-gray-700 sm:table-cell">
                         {item.hours}
                       </td>
@@ -373,7 +386,7 @@ export default function BillingDetail() {
                 </tfoot>
               </table>
             </div>
-
+            {/*Invoce will end here. */}
             <div className="lg:col-start-3">
               {/* Activity feed */}
               <h2 className="text-sm font-semibold leading-6 text-gray-900">Activity</h2>
@@ -434,7 +447,6 @@ export default function BillingDetail() {
                   </li>
                 ))}
               </ul>
-
               {/* New comment form */}
               <div className="mt-6 flex gap-x-3">
                 <img
