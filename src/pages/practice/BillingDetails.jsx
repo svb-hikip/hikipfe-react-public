@@ -45,11 +45,48 @@ function classNames(...classes) {
 }
 
 export default function BillingDetail() {
-  const data = useLoaderData();
+  const { data: {
+    uuid,
+    number,
+    date,
+    client: {
+      client_type,
+      billing_type,
+      contact: {
+        contactphone_set,
+        contactemail_set,
+        legal_first_name,
+        legal_last_name,
+        relationship,
+        client_portal_access,
+      }
+    },
+    appointment: {
+      client_name,
+      billing_type: appointment_billing_type,
+      client_type: appointment_client_type,
+      all_day,
+      start_datetime,
+      duration,
+      clinician_name,
+      location_name,
+      services_name,
+      items_name,
+    },
+    line_items,
+    payments,
+    aggregate_pre_tax_value,
+    aggregate_tax_value,
+    aggregate_payment_value,
+  } } = useLoaderData();
+
   const [selected, setSelected] = useState(moods[5])
   return (
     <div>
-          {JSON.stringify(data)}
+          {/* {JSON.stringify(data)} */}
+          <p>UUID: {uuid}</p>
+      <p>Number: {number}</p>
+      <p>Date: {date}</p>
     </div>
   )
 }
