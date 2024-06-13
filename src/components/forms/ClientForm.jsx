@@ -1,13 +1,15 @@
 import PropTypes from 'prop-types';
 import ModalTransitionWrapper from '../utils/ModalTransitionWrapper';
-import { TextFormField, PhoneFormField, EmailFormField, SwitchFormField, DropdownFormField } from './components/FormComps';
+import { TextFormField, PhoneFormField, EmailFormField, SwitchFormField, DropdownFormField, RepeatableField } from './components/FormComps';
 import { useForm } from 'react-hook-form';
-import { addNewClient } from '../../apis/ClientAPIs';
+import { addNewClient, updateClient } from '../../apis/ClientAPIs'; // Assuming you have an updateClient API function
 import { toast } from 'react-toastify';
 
-function AddNewClient({ isOpen, setIsOpen }) {
-  const { handleSubmit, register, control, formState: { errors }, setError } = useForm({
-    defaultValues: {
+function ClientForm({ isOpen, setIsOpen, clientData, setClientData }) {
+  const isEditing = Boolean(clientData);
+
+  const { handleSubmit, register, control, formState: { errors }, setError, reset } = useForm({
+    defaultValues: clientData || {
       client_type: 'Adult',
       billing_type: 'Self Pay',
       contact: {
@@ -39,18 +41,26 @@ function AddNewClient({ isOpen, setIsOpen }) {
 
   const onSubmit = async (data) => {
     try {
-      const response = await addNewClient(data);
+      if (isEditing) {
+        const response = await updateClient(data);
+        clientData || setClientData(response.data);
+        toast.success('Client updated successfully!');
+      } else {
+        const response = await addNewClient(data);
+        clientData || setClientData(response.data);
+        toast.success('Client added successfully!');
+      }
+      
       setIsOpen(false);
+      reset(); // Reset form after submission
     } catch (error) {
       if (error.response && error.response.data) {
         const serverErrors = error.response.data;
-        console.log(serverErrors, ":::");
         Object.keys(serverErrors).forEach((field) => {
           const message = serverErrors[field];
           setError(field, { type: 'server', message });
         });
       } else {
-        console.log('An unexpected error occurred:', error.response);
         toast.error('An unexpected error occurred. Please try again later.');
       }
     }
@@ -61,12 +71,12 @@ function AddNewClient({ isOpen, setIsOpen }) {
       isOpen={isOpen}
       onClose={() => setIsOpen(false)}
       actionButtons={[
-        { label: 'Create', onClick: handleSubmit(onSubmit), className: 'rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50' },
+        { label: isEditing ? 'Update' : 'Create', onClick: handleSubmit(onSubmit), className: 'rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50' },
       ]}
     >
       <form onSubmit={handleSubmit(onSubmit)} className="flex-1 p-4">
         <div className="mb-4">
-          <h2 className="text-base font-semibold leading-7 text-gray-900">Client Information</h2>
+          <h2 className="text-base font-semibold leading-7 text-gray-900">{isEditing ? 'Edit Client Information' : 'Client Information'}</h2>
           <div className="mt-8 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
             <div className="sm:col-span-3">
               <DropdownFormField
@@ -105,10 +115,26 @@ function AddNewClient({ isOpen, setIsOpen }) {
               {errors?.contact?.legal_last_name && <p className="text-red-500">Last name is required.</p>}
             </div>
             <div className="col-span-full">
-              <PhoneFormField control={control} register={register}  errors={errors} />
+              <RepeatableField 
+                control={control} 
+                name="contact.contactphone_set" 
+                renderField={({ control, index, errors, register }) => (
+                  <PhoneFormField control={control} index={index} errors={errors} register={register} />
+                )} 
+                errors={errors} 
+                register={register}
+              />
             </div>
             <div className="col-span-full">
-              <EmailFormField control={control} register={register}  errors={errors} />
+              <RepeatableField 
+                control={control} 
+                name="contact.contactemail_set" 
+                renderField={({ control, index, errors, register }) => (
+                  <EmailFormField control={control} index={index} errors={errors} register={register} />
+                )} 
+                errors={errors} 
+                register={register}
+              />
             </div>
             <div className="col-span-full">
               <SwitchFormField
@@ -125,9 +151,11 @@ function AddNewClient({ isOpen, setIsOpen }) {
   );
 }
 
-AddNewClient.propTypes = {
+ClientForm.propTypes = {
   isOpen: PropTypes.bool.isRequired,
   setIsOpen: PropTypes.func.isRequired,
+  setClientData: PropTypes.func,
+  clientData: PropTypes.object, // Prop for existing client data, if any
 };
 
-export default AddNewClient;
+export default ClientForm;
