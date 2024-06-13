@@ -1,6 +1,7 @@
 import { Field, Label, Switch, Description } from '@headlessui/react';
 import PropTypes from 'prop-types';
-import { Controller } from 'react-hook-form';
+import { Controller, useFieldArray } from 'react-hook-form';
+import {  TrashIcon, PlusIcon } from '@heroicons/react/16/solid';
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(' ');
@@ -38,7 +39,7 @@ TextFormField.propTypes = {
   error: PropTypes.object
 };
 
-export function DropdownFormField({ control, label, name, options }) {
+export function DropdownFormField({ control, label, name, options, defaultValue=0 }) {
   return (
     <>
       <label htmlFor={name} className="block text-sm font-medium leading-6 text-gray-900">
@@ -48,6 +49,7 @@ export function DropdownFormField({ control, label, name, options }) {
         <Controller
           name={name}
           control={control}
+          defaultValue={options[defaultValue].value}
           render={({ field }) => (
             <select
               {...field}
@@ -71,6 +73,7 @@ DropdownFormField.propTypes = {
   control: PropTypes.object.isRequired,
   label: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
+  defaultValue: PropTypes.number,
   options: PropTypes.arrayOf(
     PropTypes.shape({
       value: PropTypes.string.isRequired,
@@ -89,6 +92,7 @@ export function SwitchFormField({ control, label, name, description }) {
         <Controller
           name={name}
           control={control}
+          defaultValue={true}
           render={({ field: { onChange, value } }) => (
             <Switch
               checked={value}
@@ -123,7 +127,7 @@ SwitchFormField.propTypes = {
   description: PropTypes.string
 };
 
-export function PhoneFormField({ control, register, errors }) {
+export function PhoneFormField({index, control, register, errors }) {
   return (
     <div className="px-4 py-4 bg-white shadow sm:p-4">
       <fieldset>
@@ -132,14 +136,14 @@ export function PhoneFormField({ control, register, errors }) {
             <TextFormField 
               label="Phone" 
               register={register} 
-              name="contact.contactphone_set[0].phone_number"
-              error={errors?.contact?.contactphone_set?.[0]?.phone_number} // Pass the error object
+              name={`contact.contactphone_set[${index}].phone_number`}
+              error={errors?.contact?.contactphone_set?.[index]?.phone_number}
             />
           </div>
           <div className="col-span-1 sm:col-span-5">
             <DropdownFormField 
               label="Type" 
-              name="contact.contactphone_set[0].type" 
+              name={`contact.contactphone_set[${index}].type`} 
               control={control} 
               options={[{ value: "Home", label: "Home" }, { value: "Work", label: "Work" }]} 
             />
@@ -147,15 +151,15 @@ export function PhoneFormField({ control, register, errors }) {
         </div>
         <div className="mt-4 grid grid-cols-1 sm:grid-cols-2 gap-4">
           <SwitchFormField 
-            label="OK to call" 
-            name="contact.contactphone_set[0].voice" 
-            control={control} 
-          />
-          <SwitchFormField 
-            label="OK to Text" 
-            name="contact.contactphone_set[0].text" 
-            control={control} 
-          />
+              label="OK to call" 
+              name={`contact.contactphone_set[${index}].voice`} 
+              control={control} 
+            />
+            <SwitchFormField 
+              label="OK to Text" 
+              name={`contact.contactphone_set[${index}].text`} 
+              control={control} 
+            />
         </div>
       </fieldset>
     </div>
@@ -165,14 +169,12 @@ export function PhoneFormField({ control, register, errors }) {
 PhoneFormField.propTypes = {
   control: PropTypes.object.isRequired,
   register: PropTypes.func.isRequired,
+  index: PropTypes.number.isRequired,
   errors: PropTypes.object, // Adjust this according to the shape of your errors object
 };
 
-PhoneFormField.defaultProps = {
-  errors: {},
-};
 
-export function EmailFormField({ control, register, errors }) {
+export function EmailFormField({index, control, register, errors }) {
   return (
     <div className="px-4 py-4 bg-white shadow sm:p-4">
       <fieldset>
@@ -181,14 +183,14 @@ export function EmailFormField({ control, register, errors }) {
             <TextFormField 
               label="Email ID" 
               register={register} 
-              name="contact.contactemail_set[0].email"
-              error={errors?.contact?.contactemail_set?.[0]?.email} // Pass the error object
+              name={`contact.contactemail_set[${index}].email`}
+              error={errors?.contact?.contactemail_set?.[index]?.email}
             />
           </div>
           <div className="col-span-1 sm:col-span-5">
             <DropdownFormField 
               label="Type" 
-              name="contact.contactemail_set[0].type" 
+              name={`contact.contactemail_set[${index}].type`}  
               control={control} 
               options={[{ value: "Home", label: "Home" }, { value: "Work", label: "Work" }]} 
             />
@@ -197,8 +199,8 @@ export function EmailFormField({ control, register, errors }) {
         <div className="mt-4 grid grid-cols-1 sm:grid-cols-2 gap-4">
           <SwitchFormField 
             label="OK to Email" 
-            name="contact.contactemail_set[0].permission" 
-            control={control} 
+            name={`contact.contactemail_set[${index}].permission`} 
+            control={control}
           />
         </div>
       </fieldset>
@@ -206,11 +208,51 @@ export function EmailFormField({ control, register, errors }) {
   );
 }
 EmailFormField.propTypes = {
+  index: PropTypes.number.isRequired,
   control: PropTypes.object.isRequired,
   register: PropTypes.func.isRequired,
   errors: PropTypes.object, // Adjust this according to the shape of your errors object
 };
 
-EmailFormField.defaultProps = {
-  errors: {},
+
+export function RepeatableField({ control, name, renderField, errors, register }) {
+  const { fields, append, remove } = useFieldArray({
+    control,
+    name,
+  });
+
+  return (
+    <div>
+      {fields.map((item, index) => (
+        <div key={item.id} className="mb-4 flex items-center">
+          <div className="flex-1">
+            {renderField({ control, index, errors, register })}
+          </div>
+          <button
+            type="button"
+            onClick={() => remove(index)}
+            className="text-red-500 ml-1"
+          >
+            <TrashIcon className="h-5 w-5" />
+          </button>
+        </div>
+      ))}
+      <button
+        type="button"
+        onClick={() => append({})}
+        className="text-blue-500 flex items-center mt-2"
+      >
+        <PlusIcon className="h-5 w-5 mr-1" />
+        Add
+      </button>
+    </div>
+  );
+}
+
+RepeatableField.propTypes = {
+  control: PropTypes.object.isRequired,
+  name: PropTypes.string.isRequired,
+  renderField: PropTypes.func.isRequired,
+  errors: PropTypes.object,
+  register: PropTypes.func.isRequired,
 };

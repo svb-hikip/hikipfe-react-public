@@ -31,6 +31,7 @@ BaseApi.interceptors.request.use(async (config) => {
 
 
 export function handleApiError(error) {
+    console.log(error);
     if (error.response) {
         switch (error.response.status) {
             case 400:

@@ -1,9 +1,14 @@
-import { useLoaderData, NavLink, Outlet } from 'react-router-dom';
+import { useLoaderData, NavLink, Outlet, useNavigate } from 'react-router-dom';
 import { EnvelopeIcon, PhoneIcon } from '@heroicons/react/20/solid';
 import classNames from '../layout/dashboardComps/helper';
+import ClientForm from '../forms/ClientForm';
+import { useState } from 'react';
 
 function ClientDetails() {
   const data = useLoaderData();
+  const navigate = useNavigate();
+  const [clientData, setClientData] = useState(data);
+  const [isSideOverOpen, setIsSideOverOpen] = useState(false);
   const tabs = [
     { name: 'Appointments', to: 'appointments' },
     { name: 'Bills', to: 'bills' },
@@ -13,7 +18,7 @@ function ClientDetails() {
 
   return (
     <>
-      <div className="p-6 bg-white shadow-lg rounded-lg mb-6">
+      <div key={clientData} className="p-6 bg-white shadow-lg rounded-lg mb-6">
         <div className="px-4 sm:px-0">
           <h3 className="text-xl font-semibold leading-7 text-gray-900">Client Information</h3>
           <p className="mt-1 max-w-2xl text-sm leading-6 text-gray-500">Personal details and Appointments</p>
@@ -24,16 +29,16 @@ function ClientDetails() {
             <div className="border-t border-gray-200 px-4 py-3 sm:px-0 hover:bg-gray-50 rounded-lg">
               <dt className="text-sm font-medium leading-6 text-gray-900">Full name</dt>
               <dd className="mt-1 text-sm leading-6 text-gray-700 sm:mt-2">
-                <span className="font-semibold">{data.contact.legal_first_name} {data.contact.legal_last_name}</span>
-                <span className="ml-2 inline-block bg-blue-100 text-blue-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded">{data.client_type}</span>
-                <span className="ml-2 inline-block bg-green-100 text-green-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded">{data.billing_type}</span>
+                <span className="font-semibold">{clientData.contact.legal_first_name} {clientData.contact.legal_last_name}</span>
+                <span className="ml-2 inline-block bg-blue-100 text-blue-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded">{clientData.client_type}</span>
+                <span className="ml-2 inline-block bg-green-100 text-green-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded">{clientData.billing_type}</span>
               </dd>
             </div>
             <div className="border-t border-gray-200 px-4 py-3 sm:px-0 hover:bg-gray-50 rounded-lg">
               <dt className="text-sm font-medium leading-6 text-gray-900">Client Portal Access</dt>
               <dd className="mt-1 text-sm leading-6 text-gray-700 sm:mt-2">
-                <span className={`inline-block px-2 py-0.5 text-xs font-medium rounded ${data.contact.client_portal_access ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}`}>
-                  {data.contact.client_portal_access ? 'Granted' : 'Denied'}
+                <span className={`inline-block px-2 py-0.5 text-xs font-medium rounded ${clientData.contact.client_portal_access ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}`}>
+                  {clientData.contact.client_portal_access ? 'Granted' : 'Denied'}
                 </span>
               </dd>
             </div>
@@ -41,7 +46,7 @@ function ClientDetails() {
               <dt className="text-sm font-medium leading-6 text-gray-900">Email address</dt>
               <dd className="mt-1 text-sm leading-6 text-gray-700 sm:mt-2">
                 <ul>
-                  {data.contact.contactemail_set.map((email, index) => (
+                  {clientData.contact.contactemail_set.map((email, index) => (
                     <li key={index} className="flex items-center mb-1">
                       <EnvelopeIcon className="h-5 w-5 text-gray-500 mr-2" />
                       {email.email} -
@@ -58,12 +63,12 @@ function ClientDetails() {
               <dt className="text-sm font-medium leading-6 text-gray-900">Phone Number</dt>
               <dd className="mt-1 text-sm leading-6 text-gray-700 sm:mt-2">
                 <ul>
-                  {data.contact.contactphone_set.map((item, index) => (
+                  {clientData.contact.contactphone_set.map((item, index) => (
                     <li key={index} className="flex items-center mb-1">
                       <PhoneIcon className="h-5 w-5 text-gray-500 mr-2" />
                       {item.phone_number} -
                       <span className="ml-1 inline-block bg-blue-100 text-blue-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded">{item.type}</span>
-                      {/* Adding the voice and text as : check what all data the API is fetching and Add more client data to the details page */}
+                      {/* Adding the voice and text as : check what all clientData the API is fetching and Add more client clientData to the details page */}
                       <span className={`inline-block px-2 py-0.5 text-xs font-medium rounded ${item.voice ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}`}>
                         Voice: {item.voice ? 'Yes' : 'No'}
                       </span>
@@ -76,18 +81,24 @@ function ClientDetails() {
               </dd>
             </div>
           </dl>
+          <button 
+          className="text-indigo-600 hover:text-indigo-700 underline focus:outline-none"
+          onClick={() => setIsSideOverOpen(true)}
+          >
+          Edit
+        </button>
         </div>
         <div className="mt-6">
         <div className="border-t border-gray-200 px-4 py-3 sm:px-0 hover:bg-gray-50 rounded-lg">
               <dt className="text-sm font-medium leading-6 text-gray-900">Adam Sandler | Relation:Son</dt>
               <dd className="mt-1 text-sm leading-6 text-gray-700 sm:mt-2">
                 <ul>
-                  {data.contact.contactphone_set.map((item, index) => (
+                  {clientData.contact.contactphone_set.map((item, index) => (
                     <li key={index} className="flex items-center mb-1">
                       <PhoneIcon className="h-5 w-5 text-gray-500 mr-2" />
                       {item.phone_number} -
                       <span className="ml-1 inline-block bg-blue-100 text-blue-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded">{item.type}</span>
-                      {/* Adding the voice and text as : check what all data the API is fetching and Add more client data to the details page */}
+                      {/* Adding the voice and text as : check what all clientData the API is fetching and Add more client clientData to the details page */}
                       <span className={`inline-block px-2 py-0.5 text-xs font-medium rounded ${item.voice ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}`}>
                         Voice: {item.voice ? 'Yes' : 'No'}
                       </span>
@@ -100,7 +111,7 @@ function ClientDetails() {
                 </dd>
               <dd className="mt-1 text-sm leading-6 text-gray-700 sm:mt-2">
                 <ul>
-                  {data.contact.contactemail_set.map((email, index) => (
+                  {clientData.contact.contactemail_set.map((email, index) => (
                     <li key={index} className="flex items-center mb-1">
                       <EnvelopeIcon className="h-5 w-5 text-gray-500 mr-2" />
                       {email.email} -
@@ -118,12 +129,12 @@ function ClientDetails() {
               <dt className="text-sm font-medium leading-6 text-gray-900">Sunny Leon | Relation:Daughter</dt>
               <dd className="mt-1 text-sm leading-6 text-gray-700 sm:mt-2">
                 <ul>
-                  {data.contact.contactphone_set.map((item, index) => (
+                  {clientData.contact.contactphone_set.map((item, index) => (
                     <li key={index} className="flex items-center mb-1">
                       <PhoneIcon className="h-5 w-5 text-gray-500 mr-2" />
                       {item.phone_number} -
                       <span className="ml-1 inline-block bg-blue-100 text-blue-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded">{item.type}</span>
-                      {/* Adding the voice and text as : check what all data the API is fetching and Add more client data to the details page */}
+                      {/* Adding the voice and text as : check what all clientData the API is fetching and Add more client clientData to the details page */}
                       <span className={`inline-block px-2 py-0.5 text-xs font-medium rounded ${item.voice ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}`}>
                         Voice: {item.voice ? 'Yes' : 'No'}
                       </span>
@@ -136,7 +147,7 @@ function ClientDetails() {
                 </dd>
               <dd className="mt-1 text-sm leading-6 text-gray-700 sm:mt-2">
                 <ul>
-                  {data.contact.contactemail_set.map((email, index) => (
+                  {clientData.contact.contactemail_set.map((email, index) => (
                     <li key={index} className="flex items-center mb-1">
                       <EnvelopeIcon className="h-5 w-5 text-gray-500 mr-2" />
                       {email.email} -
@@ -149,7 +160,12 @@ function ClientDetails() {
                 </ul>
               </dd>
         </div>
-        <a href='#'>+ Contact Button</a>
+        <button 
+          className="text-indigo-600 hover:text-indigo-700 underline focus:outline-none"
+          onClick={() => {}}
+        >
+          Add Contact
+        </button>
         </div>
         </dl>
       </div>
@@ -165,7 +181,7 @@ function ClientDetails() {
             className="block w-full rounded-md border-gray-300 focus:border-indigo-500 focus:ring-indigo-500"
             defaultValue={tabs.find(tab => window.location.pathname.includes(tab.to))}
             onChange={(e) => {
-              window.location.href = e.target.value; // This will trigger a route change in React Router
+              navigate(e.target.value); // This will trigger a route change in React Router
             }}
           >
             {tabs.map((tab) => (
@@ -194,6 +210,7 @@ function ClientDetails() {
           </nav>
         </div>
       </div>
+      <ClientForm isOpen={isSideOverOpen} setIsOpen={setIsSideOverOpen} clientData={clientData} updateClientData={setClientData} />
       <Outlet />
     </>
   );

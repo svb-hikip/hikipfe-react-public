@@ -73,3 +73,14 @@ export const fetchProgressNotes = async ({params}) => {
       throw handleApiError(error);
     }
   };
+
+  export const updateClient = async (clientData) => {
+    try {
+      console.log(clientData, "dataaaaaaaaa");
+      const response = await BaseApi.put(`${clientsEndpoint}${clientData.uuid}/`,clientData);
+      return response;
+    } catch (error) {
+      throw handleApiError(error);
+    }
+  };
+  
