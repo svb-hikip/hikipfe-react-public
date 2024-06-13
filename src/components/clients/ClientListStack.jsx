@@ -6,7 +6,7 @@ import { NavLink } from 'react-router-dom';
 import Loading from '../utils/Loading';
 import SearchInput from "../utils/SearchInput";
 import NoResultFound from "../utils/NoResultFound";
-import AddNewClient from './AddNewClient';
+import AddNewClient from '../forms/AddNewClient';
 
 export default function ClientListStack() {
   const [clientList, setClientList] = useState([]);
@@ -15,7 +15,7 @@ export default function ClientListStack() {
   const [hasMore, setHasMore] = useState(true);
   const [totalCount, setTotalCount] = useState(null);
   const [query, setQuery] = useState("");
-  const [isSideOverOpen, SetIsSideOverOpen] = useState(false);
+  const [isSideOverOpen, setIsSideOverOpen] = useState(false);
   const isFirstRender = useRef(true);
 
   const loadMoreItems = async () => {
@@ -44,6 +44,7 @@ export default function ClientListStack() {
       setClientList([]);
       setPage(1);
       setHasMore(true);
+      setTotalCount(null);
     }
   }, [query]);
 
@@ -57,7 +58,7 @@ export default function ClientListStack() {
           <div className='flex justify-end'>
             <button 
               className="inline-flex justify-around rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
-              onClick={() => SetIsSideOverOpen(true)}
+              onClick={() => setIsSideOverOpen(true)}
             >
               Add New Client
             </button>
@@ -140,7 +141,7 @@ export default function ClientListStack() {
 
             </>
 
-      <AddNewClient isOpen={isSideOverOpen} setIsOpen={SetIsSideOverOpen} />
+      <AddNewClient isOpen={isSideOverOpen} setIsOpen={setIsSideOverOpen} />
     </>
     )}
   </>
