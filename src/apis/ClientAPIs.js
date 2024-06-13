@@ -17,8 +17,7 @@ export const fetchClients = async ({params}) => {
         };
     } catch (error) {
         console.error('Error fetching clients:', error);
-        handleApiError(error);
-        throw new Error('Failed to fetch clients');
+        throw handleApiError(error);
     }
 };
 
@@ -27,8 +26,7 @@ export const fetchClient = async ({params}) => {
         const response = await BaseApi.get(`${clientsEndpoint}${params.clientId}`);
         return response.data
     } catch (error) {
-        handleApiError(error);
-        throw new Error('Failed to fetch clients');
+      throw handleApiError(error);
     }
 };
 
@@ -40,8 +38,7 @@ export const fetchProgressNotes = async ({params}) => {
       });
       return response;
     } catch (error) {
-      handleApiError(error);
-      throw new Error('Failed to fetch invoices');
+      throw handleApiError(error);
     }
   };
   export const fetchClinicianNotes = async ({params}) => {
@@ -52,8 +49,7 @@ export const fetchProgressNotes = async ({params}) => {
       });
       return response;
     } catch (error) {
-      handleApiError(error);
-      throw new Error('Failed to fetch invoices');
+      throw handleApiError(error);
     }
   };
   export const fetchDntNotes = async ({params}) => {
@@ -64,17 +60,16 @@ export const fetchProgressNotes = async ({params}) => {
       });
       return response;
     } catch (error) {
-      handleApiError(error);
-      throw new Error('Failed to fetch invoices');
+      throw handleApiError(error);
+
     }
   };
 
-  export const addNewClient = (clientData) => {
+  export const addNewClient = async (clientData) => {
     try {
-      const response = BaseApi.post(`${clientsEndpoint}`,clientData);
-      return response.data;
+      const response = await BaseApi.post(`${clientsEndpoint}`,clientData);
+      return response;
     } catch (error) {
-      handleApiError(error);
-      throw new Error('Failed to add client');
+      throw handleApiError(error);
     }
   };
