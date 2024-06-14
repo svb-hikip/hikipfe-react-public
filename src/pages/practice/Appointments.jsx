@@ -28,9 +28,10 @@ const CalendarComponent = () => {
         allDay: appointment.all_day,
         extendedProps: {
           clinician_name: appointment.clinician_name,
+          client_name: appointment.client_name,
           location_name: appointment.location_name,
-          services_names: appointment.services_names,
-          items_names: appointment.items_names,
+          services_name: appointment.services_name,
+          items_name: appointment.items_name,
           duration: appointment.duration,
         }
       }));
@@ -61,10 +62,10 @@ const CalendarComponent = () => {
 
   return (
     <div className="calendar-container">
-        <button onClick={toggleForm} className="flex justify-start items-start rounded-md mb-2 border border-transparent bg-indigo-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
+        {/* <button onClick={toggleForm} className="flex justify-end items-start rounded-md mb-2 border border-transparent bg-indigo-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
           {isFormOpen ? 'Close Form' : 'Add Appointment'}
         </button>
-        {isFormOpen && <AddAppointmentForm />}
+        {isFormOpen && <AddAppointmentForm />} */}
       <FullCalendar
         ref={calendarRef}
         plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
