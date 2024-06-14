@@ -1,5 +1,4 @@
 import { useLoaderData, NavLink, Outlet, useNavigate } from 'react-router-dom';
-import { EnvelopeIcon, PhoneIcon } from '@heroicons/react/20/solid';
 import classNames from '../layout/dashboardComps/helper';
 import ClientForm from '../forms/ClientForm';
 import { useState } from 'react';
@@ -99,7 +98,22 @@ function ClientDetails() {
                   <ul>
                     {clientData.contact.contactemail_set.map((email, index) => (
                       <li key={index} className="flex items-center mb-1">
-                        <EnvelopeIcon className="h-5 w-5 text-gray-500 mr-2" />
+                        <svg
+                          data-slot="icon"
+                          fill="none"
+                          strokeWidth={1.5}
+                          stroke="currentColor"
+                          viewBox="0 0 24 24"
+                          xmlns="http://www.w3.org/2000/svg"
+                          aria-hidden="true"
+                          className="h-5 w-5 text-green-500 mr-2"
+                        >
+                          <path
+                            strokeLinecap="flat"
+                            strokeLinejoin="round"
+                            d="M21.75 6.75v10.5a2.25 2.25 0 0 1-2.25 2.25h-15a2.25 2.25 0 0 1-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0 0 19.5 4.5h-15a2.25 2.25 0 0 0-2.25 2.25m19.5 0v.243a2.25 2.25 0 0 1-1.07 1.916l-7.5 4.615a2.25 2.25 0 0 1-2.36 0L3.32 8.91a2.25 2.25 0 0 1-1.07-1.916V6.75"
+                          />
+                        </svg>
                         {email.email} -
                         <span className="ml-1 inline-block bg-blue-100 text-blue-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded">{email.type}</span>
                         <span className={`inline-block px-2 py-0.5 text-xs font-medium rounded ${email.permission ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}`}>
@@ -116,7 +130,22 @@ function ClientDetails() {
                   <ul>
                     {clientData.contact.contactphone_set.map((item, index) => (
                       <li key={index} className="flex items-center mb-1">
-                        <PhoneIcon className="h-5 w-5 text-gray-500 mr-2" />
+                        <svg
+                          data-slot="icon"
+                          fill="none"
+                          strokeWidth={1.5}
+                          stroke="currentColor"
+                          viewBox="0 0 24 24"
+                          xmlns="http://www.w3.org/2000/svg"
+                          aria-hidden="true"
+                          className="h-4.2 w-5 text-red-400 mr-2"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            d="M2.25 6.75c0 8.284 6.716 15 15 15h2.25a2.25 2.25 0 0 0 2.25-2.25v-1.372c0-.516-.351-.966-.852-1.091l-4.423-1.106c-.44-.11-.902.055-1.173.417l-.97 1.293c-.282.376-.769.542-1.21.38a12.035 12.035 0 0 1-7.143-7.143c-.162-.441.004-.928.38-1.21l1.293-.97c.363-.271.527-.734.417-1.173L6.963 3.102a1.125 1.125 0 0 0-1.091-.852H4.5A2.25 2.25 0 0 0 2.25 4.5v2.25Z"
+                          />
+                        </svg>
                         {item.phone_number} -
                         <span className="ml-1 inline-block bg-blue-100 text-blue-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded">{item.type}</span>
                         <span className={`inline-block px-2 py-0.5 text-xs font-medium rounded ${item.voice ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}`}>
@@ -138,7 +167,22 @@ function ClientDetails() {
                 <ul>
                   {clientData.contact.contactphone_set.map((item, index) => (
                     <li key={index} className="flex items-center mb-1">
-                      <PhoneIcon className="h-5 w-5 text-gray-500 mr-2" />
+                      <svg
+                          data-slot="icon"
+                          fill="none"
+                          strokeWidth={1.5}
+                          stroke="currentColor"
+                          viewBox="0 0 24 24"
+                          xmlns="http://www.w3.org/2000/svg"
+                          aria-hidden="true"
+                          className="h-4.2 w-5 text-red-400 mr-2"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            d="M2.25 6.75c0 8.284 6.716 15 15 15h2.25a2.25 2.25 0 0 0 2.25-2.25v-1.372c0-.516-.351-.966-.852-1.091l-4.423-1.106c-.44-.11-.902.055-1.173.417l-.97 1.293c-.282.376-.769.542-1.21.38a12.035 12.035 0 0 1-7.143-7.143c-.162-.441.004-.928.38-1.21l1.293-.97c.363-.271.527-.734.417-1.173L6.963 3.102a1.125 1.125 0 0 0-1.091-.852H4.5A2.25 2.25 0 0 0 2.25 4.5v2.25Z"
+                          />
+                        </svg>
                       {item.phone_number} -
                       <span className="ml-1 inline-block bg-blue-100 text-blue-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded">{item.type}</span>
                       <span className={`inline-block px-2 py-0.5 text-xs font-medium rounded ${item.voice ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}`}>
@@ -155,7 +199,22 @@ function ClientDetails() {
                 <ul>
                   {clientData.contact.contactemail_set.map((email, index) => (
                     <li key={index} className="flex items-center mb-1">
-                      <EnvelopeIcon className="h-5 w-5 text-gray-500 mr-2" />
+                      <svg
+                          data-slot="icon"
+                          fill="none"
+                          strokeWidth={1.5}
+                          stroke="currentColor"
+                          viewBox="0 0 24 24"
+                          xmlns="http://www.w3.org/2000/svg"
+                          aria-hidden="true"
+                          className="h-5 w-5 text-green-500 mr-2"
+                        >
+                          <path
+                            strokeLinecap="flat"
+                            strokeLinejoin="round"
+                            d="M21.75 6.75v10.5a2.25 2.25 0 0 1-2.25 2.25h-15a2.25 2.25 0 0 1-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0 0 19.5 4.5h-15a2.25 2.25 0 0 0-2.25 2.25m19.5 0v.243a2.25 2.25 0 0 1-1.07 1.916l-7.5 4.615a2.25 2.25 0 0 1-2.36 0L3.32 8.91a2.25 2.25 0 0 1-1.07-1.916V6.75"
+                          />
+                        </svg>
                       {email.email} -
                       <span className="ml-1 inline-block bg-blue-100 text-blue-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded">{email.type}</span>
                       <span className={`inline-block px-2 py-0.5 text-xs font-medium rounded ${email.permission ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}`}>
@@ -172,7 +231,22 @@ function ClientDetails() {
                 <ul>
                   {clientData.contact.contactphone_set.map((item, index) => (
                     <li key={index} className="flex items-center mb-1">
-                      <PhoneIcon className="h-5 w-5 text-gray-500 mr-2" />
+                      <svg
+                          data-slot="icon"
+                          fill="none"
+                          strokeWidth={1.5}
+                          stroke="currentColor"
+                          viewBox="0 0 24 24"
+                          xmlns="http://www.w3.org/2000/svg"
+                          aria-hidden="true"
+                          className="h-4.2 w-5 text-red-400 mr-2"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            d="M2.25 6.75c0 8.284 6.716 15 15 15h2.25a2.25 2.25 0 0 0 2.25-2.25v-1.372c0-.516-.351-.966-.852-1.091l-4.423-1.106c-.44-.11-.902.055-1.173.417l-.97 1.293c-.282.376-.769.542-1.21.38a12.035 12.035 0 0 1-7.143-7.143c-.162-.441.004-.928.38-1.21l1.293-.97c.363-.271.527-.734.417-1.173L6.963 3.102a1.125 1.125 0 0 0-1.091-.852H4.5A2.25 2.25 0 0 0 2.25 4.5v2.25Z"
+                          />
+                        </svg>
                       {item.phone_number} -
                       <span className="ml-1 inline-block bg-blue-100 text-blue-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded">{item.type}</span>
                       <span className={`inline-block px-2 py-0.5 text-xs font-medium rounded ${item.voice ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}`}>
@@ -189,7 +263,22 @@ function ClientDetails() {
                 <ul>
                   {clientData.contact.contactemail_set.map((email, index) => (
                     <li key={index} className="flex items-center mb-1">
-                      <EnvelopeIcon className="h-5 w-5 text-gray-500 mr-2" />
+                      <svg
+                          data-slot="icon"
+                          fill="none"
+                          strokeWidth={1.5}
+                          stroke="currentColor"
+                          viewBox="0 0 24 24"
+                          xmlns="http://www.w3.org/2000/svg"
+                          aria-hidden="true"
+                          className="h-5 w-5 text-green-500 mr-2"
+                        >
+                          <path
+                            strokeLinecap="flat"
+                            strokeLinejoin="round"
+                            d="M21.75 6.75v10.5a2.25 2.25 0 0 1-2.25 2.25h-15a2.25 2.25 0 0 1-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0 0 19.5 4.5h-15a2.25 2.25 0 0 0-2.25 2.25m19.5 0v.243a2.25 2.25 0 0 1-1.07 1.916l-7.5 4.615a2.25 2.25 0 0 1-2.36 0L3.32 8.91a2.25 2.25 0 0 1-1.07-1.916V6.75"
+                          />
+                        </svg>
                       {email.email} -
                       <span className="ml-1 inline-block bg-blue-100 text-blue-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded">{email.type}</span>
                       <span className={`inline-block px-2 py-0.5 text-xs font-medium rounded ${email.permission ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}`}>
