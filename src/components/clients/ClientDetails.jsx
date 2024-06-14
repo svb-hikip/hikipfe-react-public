@@ -24,109 +24,72 @@ function ClientDetails() {
           <p className="mt-1 max-w-2xl text-sm leading-6 text-gray-500">Personal details and Appointments</p>
         </div>
         <dl className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-        <div className="mt-6">
-          <dl className="grid grid-cols-1 sm:grid-cols-1 gap-3">
-            <div className="border-t border-gray-200 px-4 py-3 sm:px-0 hover:bg-gray-50 rounded-lg">
-              <dt className="text-sm font-medium leading-6 text-gray-900">Full name</dt>
-              <dd className="mt-1 text-sm leading-6 text-gray-700 sm:mt-2">
-                <span className="font-semibold">{clientData.contact.legal_first_name} {clientData.contact.legal_last_name}</span>
-                <span className="ml-2 inline-block bg-blue-100 text-blue-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded">{clientData.client_type}</span>
-                <span className="ml-2 inline-block bg-green-100 text-green-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded">{clientData.billing_type}</span>
-              </dd>
-            </div>
-            <div className="border-t border-gray-200 px-4 py-3 sm:px-0 hover:bg-gray-50 rounded-lg">
-              <dt className="text-sm font-medium leading-6 text-gray-900">Client Portal Access</dt>
-              <dd className="mt-1 text-sm leading-6 text-gray-700 sm:mt-2">
-                <span className={`inline-block px-2 py-0.5 text-xs font-medium rounded ${clientData.contact.client_portal_access ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}`}>
-                  {clientData.contact.client_portal_access ? 'Granted' : 'Denied'}
-                </span>
-              </dd>
-            </div>
-            <div className="border-t border-gray-200 px-4 py-3 sm:px-0 hover:bg-gray-50 rounded-lg">
-              <dt className="text-sm font-medium leading-6 text-gray-900">Email address</dt>
-              <dd className="mt-1 text-sm leading-6 text-gray-700 sm:mt-2">
-                <ul>
-                  {clientData.contact.contactemail_set.map((email, index) => (
-                    <li key={index} className="flex items-center mb-1">
-                      <EnvelopeIcon className="h-5 w-5 text-gray-500 mr-2" />
-                      {email.email} -
-                      <span className="ml-1 inline-block bg-blue-100 text-blue-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded">{email.type}</span>
-                      <span className={`inline-block px-2 py-0.5 text-xs font-medium rounded ${email.permission ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}`}>
-                        {email.permission ? 'Granted' : 'Denied'}
-                      </span>
-                    </li>
-                  ))}
-                </ul>
-              </dd>
-            </div>
-            <div className="border-t border-gray-200 px-4 py-3 sm:px-0 hover:bg-gray-50 rounded-lg">
-              <dt className="text-sm font-medium leading-6 text-gray-900">Phone Number</dt>
-              <dd className="mt-1 text-sm leading-6 text-gray-700 sm:mt-2">
-                <ul>
-                  {clientData.contact.contactphone_set.map((item, index) => (
-                    <li key={index} className="flex items-center mb-1">
-                      <PhoneIcon className="h-5 w-5 text-gray-500 mr-2" />
-                      {item.phone_number} -
-                      <span className="ml-1 inline-block bg-blue-100 text-blue-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded">{item.type}</span>
-                      {/* Adding the voice and text as : check what all clientData the API is fetching and Add more client clientData to the details page */}
-                      <span className={`inline-block px-2 py-0.5 text-xs font-medium rounded ${item.voice ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}`}>
-                        Voice: {item.voice ? 'Yes' : 'No'}
-                      </span>
-                      <span className={`ml-1 inline-block px-2 py-0.5 text-xs font-medium rounded ${item.text ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}`}>
-                        Text: {item.text ? 'Yes' : 'No'}
-                      </span>
-                    </li>
-                  ))}
-                </ul>
-              </dd>
-            </div>
-          </dl>
-          <button 
-          className="text-indigo-600 hover:text-indigo-700 underline focus:outline-none"
-          onClick={() => setIsSideOverOpen(true)}
-          >
-          Edit
-        </button>
-        </div>
-        <div className="mt-6">
-        <div className="border-t border-gray-200 px-4 py-3 sm:px-0 hover:bg-gray-50 rounded-lg">
-              <dt className="text-sm font-medium leading-6 text-gray-900">Adam Sandler | Relation:Son</dt>
-              <dd className="mt-1 text-sm leading-6 text-gray-700 sm:mt-2">
-                <ul>
-                  {clientData.contact.contactphone_set.map((item, index) => (
-                    <li key={index} className="flex items-center mb-1">
-                      <PhoneIcon className="h-5 w-5 text-gray-500 mr-2" />
-                      {item.phone_number} -
-                      <span className="ml-1 inline-block bg-blue-100 text-blue-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded">{item.type}</span>
-                      {/* Adding the voice and text as : check what all clientData the API is fetching and Add more client clientData to the details page */}
-                      <span className={`inline-block px-2 py-0.5 text-xs font-medium rounded ${item.voice ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}`}>
-                        Voice: {item.voice ? 'Yes' : 'No'}
-                      </span>
-                      <span className={`ml-1 inline-block px-2 py-0.5 text-xs font-medium rounded ${item.text ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}`}>
-                        Text: {item.text ? 'Yes' : 'No'}
-                      </span>
-                    </li>
-                  ))}
-                </ul>
+          <div className="mt-6">
+            <dl className="grid grid-cols-1 sm:grid-cols-1 gap-3">
+              <div className="border-t border-gray-200 px-4 py-3 sm:px-0 hover:bg-gray-50 rounded-lg">
+                <dt className="text-sm font-medium leading-6 text-gray-900">Full name</dt>
+                <dd className="mt-1 text-sm leading-6 text-gray-700 sm:mt-2">
+                  <span className="font-semibold">{clientData.contact.legal_first_name} {clientData.contact.legal_last_name}</span>
+                  <span className="ml-2 inline-block bg-blue-100 text-blue-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded">{clientData.client_type}</span>
+                  <span className="ml-2 inline-block bg-green-100 text-green-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded">{clientData.billing_type}</span>
                 </dd>
-              <dd className="mt-1 text-sm leading-6 text-gray-700 sm:mt-2">
-                <ul>
-                  {clientData.contact.contactemail_set.map((email, index) => (
-                    <li key={index} className="flex items-center mb-1">
-                      <EnvelopeIcon className="h-5 w-5 text-gray-500 mr-2" />
-                      {email.email} -
-                      <span className="ml-1 inline-block bg-blue-100 text-blue-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded">{email.type}</span>
-                      <span className={`inline-block px-2 py-0.5 text-xs font-medium rounded ${email.permission ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}`}>
-                        {email.permission ? 'Granted' : 'Denied'}
-                      </span>
-                    </li>
-                  ))}
-                </ul>
-              </dd>
-
-        </div>
-        <div className="border-t border-gray-200 px-4 py-3 sm:px-0 hover:bg-gray-50 rounded-lg">
-              <dt className="text-sm font-medium leading-6 text-gray-900">Sunny Leon | Relation:Daughter</dt>
+              </div>
+              <div className="border-t border-gray-200 px-4 py-3 sm:px-0 hover:bg-gray-50 rounded-lg">
+                <dt className="text-sm font-medium leading-6 text-gray-900">Client Portal Access</dt>
+                <dd className="mt-1 text-sm leading-6 text-gray-700 sm:mt-2">
+                  <span className={`inline-block px-2 py-0.5 text-xs font-medium rounded ${clientData.contact.client_portal_access ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}`}>
+                    {clientData.contact.client_portal_access ? 'Granted' : 'Denied'}
+                  </span>
+                </dd>
+              </div>
+              <div className="border-t border-gray-200 px-4 py-3 sm:px-0 hover:bg-gray-50 rounded-lg">
+                <dt className="text-sm font-medium leading-6 text-gray-900">Email address</dt>
+                <dd className="mt-1 text-sm leading-6 text-gray-700 sm:mt-2">
+                  <ul>
+                    {clientData.contact.contactemail_set.map((email, index) => (
+                      <li key={index} className="flex items-center mb-1">
+                        <EnvelopeIcon className="h-5 w-5 text-gray-500 mr-2" />
+                        {email.email} -
+                        <span className="ml-1 inline-block bg-blue-100 text-blue-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded">{email.type}</span>
+                        <span className={`inline-block px-2 py-0.5 text-xs font-medium rounded ${email.permission ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}`}>
+                          {email.permission ? 'Granted' : 'Denied'}
+                        </span>
+                      </li>
+                    ))}
+                  </ul>
+                </dd>
+              </div>
+              <div className="border-t border-gray-200 px-4 py-3 sm:px-0 hover:bg-gray-50 rounded-lg">
+                <dt className="text-sm font-medium leading-6 text-gray-900">Phone Number</dt>
+                <dd className="mt-1 text-sm leading-6 text-gray-700 sm:mt-2">
+                  <ul>
+                    {clientData.contact.contactphone_set.map((item, index) => (
+                      <li key={index} className="flex items-center mb-1">
+                        <PhoneIcon className="h-5 w-5 text-gray-500 mr-2" />
+                        {item.phone_number} -
+                        <span className="ml-1 inline-block bg-blue-100 text-blue-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded">{item.type}</span>
+                        <span className={`inline-block px-2 py-0.5 text-xs font-medium rounded ${item.voice ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}`}>
+                          Voice: {item.voice ? 'Yes' : 'No'}
+                        </span>
+                        <span className={`ml-1 inline-block px-2 py-0.5 text-xs font-medium rounded ${item.text ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}`}>
+                          Text: {item.text ? 'Yes' : 'No'}
+                        </span>
+                      </li>
+                    ))}
+                  </ul>
+                </dd>
+              </div>
+            </dl>
+            <button
+              className="mt-4 inline-flex items-center px-4 py-2 border border-indigo-600 text-indigo-600 text-sm font-medium rounded-md hover:bg-indigo-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition duration-150 ease-in-out"
+              onClick={() => setIsSideOverOpen(true)}
+            >
+              Edit
+            </button>
+          </div>
+          <div className="mt-6">
+            <div className="border-t border-gray-200 px-4 py-3 sm:px-0 hover:bg-gray-50 rounded-lg">
+              <dt className="text-sm font-medium leading-6 text-gray-900">Adam Sandler | Relation: Son</dt>
               <dd className="mt-1 text-sm leading-6 text-gray-700 sm:mt-2">
                 <ul>
                   {clientData.contact.contactphone_set.map((item, index) => (
@@ -134,7 +97,6 @@ function ClientDetails() {
                       <PhoneIcon className="h-5 w-5 text-gray-500 mr-2" />
                       {item.phone_number} -
                       <span className="ml-1 inline-block bg-blue-100 text-blue-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded">{item.type}</span>
-                      {/* Adding the voice and text as : check what all clientData the API is fetching and Add more client clientData to the details page */}
                       <span className={`inline-block px-2 py-0.5 text-xs font-medium rounded ${item.voice ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}`}>
                         Voice: {item.voice ? 'Yes' : 'No'}
                       </span>
@@ -144,7 +106,7 @@ function ClientDetails() {
                     </li>
                   ))}
                 </ul>
-                </dd>
+              </dd>
               <dd className="mt-1 text-sm leading-6 text-gray-700 sm:mt-2">
                 <ul>
                   {clientData.contact.contactemail_set.map((email, index) => (
@@ -159,14 +121,48 @@ function ClientDetails() {
                   ))}
                 </ul>
               </dd>
-        </div>
-        <button 
-          className="text-indigo-600 hover:text-indigo-700 underline focus:outline-none"
-          onClick={() => {}}
-        >
-          Add Contact
-        </button>
-        </div>
+            </div>
+            <div className="border-t border-gray-200 px-4 py-3 sm:px-0 hover:bg-gray-50 rounded-lg">
+              <dt className="text-sm font-medium leading-6 text-gray-900">Sunny Leon | Relation: Daughter</dt>
+              <dd className="mt-1 text-sm leading-6 text-gray-700 sm:mt-2">
+                <ul>
+                  {clientData.contact.contactphone_set.map((item, index) => (
+                    <li key={index} className="flex items-center mb-1">
+                      <PhoneIcon className="h-5 w-5 text-gray-500 mr-2" />
+                      {item.phone_number} -
+                      <span className="ml-1 inline-block bg-blue-100 text-blue-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded">{item.type}</span>
+                      <span className={`inline-block px-2 py-0.5 text-xs font-medium rounded ${item.voice ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}`}>
+                        Voice: {item.voice ? 'Yes' : 'No'}
+                      </span>
+                      <span className={`ml-1 inline-block px-2 py-0.5 text-xs font-medium rounded ${item.text ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}`}>
+                        Text: {item.text ? 'Yes' : 'No'}
+                      </span>
+                    </li>
+                  ))}
+                </ul>
+              </dd>
+              <dd className="mt-1 text-sm leading-6 text-gray-700 sm:mt-2">
+                <ul>
+                  {clientData.contact.contactemail_set.map((email, index) => (
+                    <li key={index} className="flex items-center mb-1">
+                      <EnvelopeIcon className="h-5 w-5 text-gray-500 mr-2" />
+                      {email.email} -
+                      <span className="ml-1 inline-block bg-blue-100 text-blue-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded">{email.type}</span>
+                      <span className={`inline-block px-2 py-0.5 text-xs font-medium rounded ${email.permission ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}`}>
+                        {email.permission ? 'Granted' : 'Denied'}
+                      </span>
+                    </li>
+                  ))}
+                </ul>
+              </dd>
+            </div>
+            <button
+              className="mt-4 inline-flex items-center px-4 py-2 border border-indigo-600 text-indigo-600 text-sm font-medium rounded-md hover:bg-indigo-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition duration-150 ease-in-out"
+              onClick={() => { }}
+            >
+              Add Contact
+            </button>
+          </div>
         </dl>
       </div>
 
