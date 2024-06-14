@@ -5,7 +5,7 @@ import timeGridPlugin from '@fullcalendar/timegrid';
 import interactionPlugin from '@fullcalendar/interaction';
 import { fetchPracticeAppointments } from '../../apis/PracticeAPIs';  // Adjust the import based on your project structure
 import AppointmentDetail from '../../components/appointments/AppointmentCalendarDetail';
-import AddAppointmentForm from '../../components/appointments/AddAppointmentForm';
+import AppointmentForm from '../../components/forms/AppointmentForm';
 
 const CalendarComponent = () => {
   const [events, setEvents] = useState([]);
@@ -62,10 +62,13 @@ const CalendarComponent = () => {
 
   return (
     <div className="calendar-container">
-        {/* <button onClick={toggleForm} className="flex justify-end items-start rounded-md mb-2 border border-transparent bg-indigo-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
-          {isFormOpen ? 'Close Form' : 'Add Appointment'}
-        </button>
-        {isFormOpen && <AddAppointmentForm />} */}
+        <div className="flex justify-end mb-2">
+          <button onClick={toggleForm} 
+            className="inline-flex justify-around rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+          >
+            Add New Appointment
+          </button>
+      </div>
       <FullCalendar
         ref={calendarRef}
         plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
@@ -81,6 +84,7 @@ const CalendarComponent = () => {
         eventClick={handleEventClick}
       />
       {isAppointmentDetailOpen && <AppointmentDetail isOpen={isAppointmentDetailOpen} onClose={closeDetail} appointment={selectedAppointment} />}
+      {isFormOpen && <AppointmentForm isOpen={isFormOpen} setIsOpen={setIsFormOpen} />}
     </div>
   );
 };

@@ -2,6 +2,10 @@ import { Field, Label, Switch, Description } from '@headlessui/react';
 import PropTypes from 'prop-types';
 import { Controller, useFieldArray } from 'react-hook-form';
 import {  TrashIcon, PlusIcon } from '@heroicons/react/16/solid';
+import FullCalendar from '@fullcalendar/react';
+import dayGridPlugin from '@fullcalendar/daygrid';
+import timeGridPlugin from '@fullcalendar/timegrid';
+import interactionPlugin from '@fullcalendar/interaction';
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(' ');
@@ -255,4 +259,39 @@ RepeatableField.propTypes = {
   renderField: PropTypes.func.isRequired,
   errors: PropTypes.object,
   register: PropTypes.func.isRequired,
+};
+
+export const DateTimeField = ({ label, register, name, value, onChange, error, handleDateClick }) => (
+  <div>
+      <label className="block text-sm font-medium leading-6 text-gray-900">{label}</label>
+      <input
+          type="datetime-local"
+          {...register(name)}
+          value={value}
+          onChange={onChange}
+          className={`my-2 block w-full rounded-md border-gray-300 shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm ${error ? 'border-red-500' : ''}`}
+      />
+      {error && <span className="text-red-500 text-sm">{error.message}</span>}
+      <FullCalendar
+          plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
+          initialView="dayGridMonth"
+          dateClick={handleDateClick}
+          selectable={true}
+          headerToolbar={{
+              left: 'prev,next today',
+              center: 'title',
+              right: 'dayGridMonth,timeGridWeek,timeGridDay'
+          }}
+      />
+  </div>
+);
+
+DateTimeField.propTypes = {
+  label: PropTypes.string.isRequired,
+  register: PropTypes.func.isRequired,
+  name: PropTypes.string.isRequired,
+  value: PropTypes.string.isRequired,
+  onChange: PropTypes.func.isRequired,
+  error: PropTypes.object,
+  handleDateClick: PropTypes.func.isRequired,
 };
