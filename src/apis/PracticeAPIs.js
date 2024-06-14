@@ -27,6 +27,16 @@ export const fetchPracticeAppointments = async ({params}) => {
     }
   }
 
+  export const updatePracticeAppointments = async (uuid, appointmentData) => {
+    try {
+      const response = await BaseApi.put(`${appointmentEndpoint}/${uuid}`,appointmentData);
+      return response;
+    } catch (error) {
+      console.error('Failed to update appointment data');
+      throw handleApiError(error);
+    }
+  }
+
   export const deletePracticeAppointments = async (uuid) => {
     try {
       const response = await BaseApi.delete(`${appointmentEndpoint}/${uuid}`);
