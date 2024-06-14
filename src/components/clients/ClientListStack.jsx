@@ -6,7 +6,7 @@ import { NavLink } from 'react-router-dom';
 import Loading from '../utils/Loading';
 import SearchInput from "../utils/SearchInput";
 import NoResultFound from "../utils/NoResultFound";
-import AddNewClient from '../forms/AddNewClient';
+import ClientForm from '../forms/ClientForm';
 
 export default function ClientListStack() {
   const [clientList, setClientList] = useState([]);
@@ -141,7 +141,7 @@ export default function ClientListStack() {
 
             </>
 
-      <AddNewClient isOpen={isSideOverOpen} setIsOpen={setIsSideOverOpen} />
+      <ClientForm isOpen={isSideOverOpen} setIsOpen={setIsSideOverOpen} />
     </>
     )}
   </>
