@@ -11,10 +11,10 @@ const AppointmentDetail = ({isOpen, onClose, appointment}) => {
         </div>
         <div className="mt-2">
           <p><strong>Clinician:</strong> {appointment.clinician_name}</p>
-          <p><strong>Client:</strong> {appointment.clinician_name}</p>
+          <p><strong>Client:</strong> {appointment.client_name}</p>
           <p><strong>Location:</strong> {appointment.location_name}</p>
-          <p><strong>Services:</strong> {appointment.services_names ? appointment.services_names.join(', '): 'N/A'}</p>
-          <p><strong>Items:</strong> {appointment.items_names ? appointment.items_names.join(', ') : 'N/A'}</p>
+          <p><strong>Services:</strong> {appointment.services_name ? appointment.services_name.join(', ') : 'N/A'}</p>
+          <p><strong>Items:</strong> {appointment.items_name ? appointment.items_name.join(', ') : 'N/A'}</p>
           <p><strong>Duration:</strong> {appointment.duration}</p>
         </div>
         <div className="flex justify-end mt-4">
