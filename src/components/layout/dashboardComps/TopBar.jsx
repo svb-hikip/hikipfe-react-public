@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types'; 
 import classNames from './helper'
-import { Menu, Transition } from '@headlessui/react'
+import { Menu, Transition, MenuButton, MenuItem, MenuItems } from '@headlessui/react'
 import { Fragment } from 'react'
 import {
     Bars3Icon,
@@ -53,7 +53,7 @@ function TopBar({ setSidebarOpen }) {
 
             {/* Profile dropdown */}
             <Menu as="div" className="relative">
-              <Menu.Button className="-m-1.5 flex items-center p-1.5">
+              <MenuButton className="-m-1.5 flex items-center p-1.5">
                 <span className="sr-only">Open user menu</span>
                 <img
                   className="h-8 w-8 rounded-full bg-gray-50"
@@ -66,7 +66,7 @@ function TopBar({ setSidebarOpen }) {
                   </span>
                   <ChevronDownIcon className="ml-2 h-5 w-5 text-gray-400" aria-hidden="true" />
                 </span>
-              </Menu.Button>
+              </MenuButton>
               <Transition
                 as={Fragment}
                 enter="transition ease-out duration-100"
@@ -76,9 +76,9 @@ function TopBar({ setSidebarOpen }) {
                 leaveFrom="transform opacity-100 scale-100"
                 leaveTo="transform opacity-0 scale-95"
               >
-                <Menu.Items className="absolute right-0 z-10 mt-2.5 w-32 origin-top-right rounded-md bg-white py-2 shadow-lg ring-1 ring-gray-900/5 focus:outline-none">
+                <MenuItems className="absolute right-0 z-10 mt-2.5 w-32 origin-top-right rounded-md bg-white py-2 shadow-lg ring-1 ring-gray-900/5 focus:outline-none">
                   {userNavigation.map((item) => (
-                    <Menu.Item key={item.name}>
+                    <MenuItem key={item.name}>
                       {({ active }) => (
                         <a
                           onClick={item.action}
@@ -90,9 +90,9 @@ function TopBar({ setSidebarOpen }) {
                           {item.name}
                         </a>
                       )}
-                    </Menu.Item>
+                    </MenuItem>
                   ))}
-                </Menu.Items>
+                </MenuItems>
               </Transition>
             </Menu>
           </div>
